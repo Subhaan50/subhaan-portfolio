@@ -4,7 +4,7 @@ import { resolve } from 'path'
 export default defineConfig({
   root: '.',
   publicDir: 'public',
-  base: process.env.NODE_ENV === 'production' ? '/subhaan-portfolio/' : '/',
+  base: '/',
   build: {
     outDir: 'dist',
     rollupOptions: {
