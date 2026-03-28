@@ -225,8 +225,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .school-seal {
-  width: 66px;
-  height: 66px;
+  width: 106px;
+  height: 106px;
   object-fit: contain;
   flex-shrink: 0;
   vertical-align: middle;
