@@ -186,7 +186,7 @@ Colors and typography are controlled via CSS variables at the top of `styles.css
 :root {
   --bg:        #F7F2EA;   /* cream background */
   --text:      #1A1A1A;   /* primary text: name, body */
-  --secondary: #363230;   /* supporting text: labels, descriptions, discipline tag */
+  --secondary: #252220;   /* supporting text: labels, descriptions, discipline tag */
   --muted:     #6B6760;   /* subtle only: dates, inactive nav, social links */
   --gold:      #C9A050;   /* accent color */
   --border:    #E8E0D5;   /* divider lines */
