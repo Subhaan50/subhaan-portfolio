@@ -1,28 +1,18 @@
-// Highlight active nav link based on current path
+// Mark active nav link based on current page
 function setActiveNav() {
-  const path = window.location.pathname
+  const path = window.location.pathname.replace(/\/$/, '') || '/'
   document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href')
-    if (href === path || (path === '/' && href === '/')) {
-      link.classList.add('active')
-    } else {
-      link.classList.remove('active')
-    }
-  })
-}
-
-// Subtle fade-in on load
-function fadeIn() {
-  document.body.style.opacity = '0'
-  document.body.style.transition = 'opacity 0.4s ease'
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      document.body.style.opacity = '1'
-    })
+    const href = link.getAttribute('href').replace(/\/$/, '') || '/'
+    link.classList.toggle('active', href === path)
   })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   setActiveNav()
-  fadeIn()
+  // Fade in
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.body.classList.add('loaded')
+    })
+  })
 })
