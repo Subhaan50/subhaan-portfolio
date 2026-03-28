@@ -1,6 +1,8 @@
 # subhaan-portfolio
 
-Personal portfolio website for Subhaan Syed — built with vanilla HTML, CSS, and JavaScript using [Vite](https://vitejs.dev/). Deployed on [Vercel](https://vercel.com/).
+Personal portfolio website for Subhaan Syed — built with vanilla HTML, CSS, and JavaScript using [Vite](https://vitejs.dev/).
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Subhaan50/subhaan-portfolio)
 
 ---
 
