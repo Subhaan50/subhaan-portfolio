@@ -8,7 +8,7 @@
 :root {
   --bg:        #F7F2EA;
   --text:      #1A1A1A;   /* headings, primary body */
-  --secondary: #4A4643;   /* supporting readable text: labels, descriptions, subtitles */
+  --secondary: #363230;   /* supporting readable text: labels, descriptions, subtitles */
   --muted:     #6B6760;   /* subtle only: dates, inactive nav, discipline tag */
   --gold:      #C9A050;
   --border:    #E8E0D5;
