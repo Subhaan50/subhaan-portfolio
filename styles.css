@@ -137,7 +137,13 @@ a { color: inherit; text-decoration: none; }
 /* ── Main content ─────────────────────────────────────────── */
 .content {
   flex: 1;
+  border-left: 1px solid var(--border);
   padding: 72px 60px 80px;
+}
+
+/* Blog post pages — no structural lines */
+.content--post {
+  border-left: none;
 }
 
 /* ── Hero: name + discipline ──────────────────────────────── */
