@@ -30,7 +30,7 @@ export const posts = [
   // Blog posts go here.
   // Format: { title: "...", date: "YYYY-MM-DD", url: "posts/filename.html" }
   {
-    title: "getting into robotics software",
+    title: "Getting into robotics software engineering",
     date: "2026-03-28",
     url: "posts/robotics-roadmap.html",
   },

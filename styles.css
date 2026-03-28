@@ -108,7 +108,6 @@ a { color: inherit; text-decoration: none; }
 
 .nav-link.active {
   color: var(--gold);
-  border-bottom-color: var(--gold);
 }
 
 /* ── Socials ──────────────────────────────────────────────── */
@@ -138,7 +137,6 @@ a { color: inherit; text-decoration: none; }
 /* ── Main content ─────────────────────────────────────────── */
 .content {
   flex: 1;
-  border-left: 1px solid var(--border);
   padding: 72px 60px 80px;
 }
 

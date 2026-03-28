@@ -54,7 +54,7 @@ function renderBlog() {
 
   const items = posts
     .slice()
-    .sort((a, b) => new Date(b.date) - new Date(a.date)) // newest first
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
     .map(post => {
       const d = new Date(post.date)
       const label = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
@@ -66,7 +66,7 @@ function renderBlog() {
       `
     }).join('')
 
-  container.innerHTML = `<ul class="entry-list">${items}</ul>`
+  container.innerHTML = `<ul class="entry-list" style="margin-top:0">${items}</ul>`
 }
 
 // ── Init ───────────────────────────────────────────────────
