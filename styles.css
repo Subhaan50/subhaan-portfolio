@@ -66,31 +66,20 @@ a { color: inherit; text-decoration: none; }
   gap: 36px;
 }
 
-/* ── Logo (ChatGPT-style rounded square) ──────────────────── */
+/* ── Logo ─────────────────────────────────────────────────── */
 .logo-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  display: inline-block;
+  width: 44px;
   flex-shrink: 0;
+  opacity: 0.88;
+  transition: opacity 0.2s ease;
 }
 
-.logo-wrap:hover {
-  border-color: var(--gold);
-  box-shadow: 0 2px 8px rgba(201,160,80,0.15);
-}
+.logo-wrap:hover { opacity: 1; }
 
 .logo {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
   display: block;
 }
 
@@ -148,11 +137,7 @@ a { color: inherit; text-decoration: none; }
 .content {
   flex: 1;
   border-left: 1px solid var(--border);
-  padding: 0 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
+  padding: 72px 60px 80px;
 }
 
 /* ── Hero: name + discipline ──────────────────────────────── */
