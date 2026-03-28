@@ -60,7 +60,7 @@ function renderBlog() {
       const label = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
       return `
         <li class="entry-item">
-          <span class="entry-link">${post.title}</span>
+          <a class="entry-link entry-link--post" href="${post.url}">${post.title}</a>
           <span class="entry-date">${label}</span>
         </li>
       `

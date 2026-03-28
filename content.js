@@ -28,8 +28,10 @@ export const archive = [
 
 export const posts = [
   // Blog posts go here.
-  // Format: { title: "...", date: "YYYY-MM-DD" }
-  //
-  // Example:
-  // { title: "Thoughts on robot learning", date: "2026-04-01" },
+  // Format: { title: "...", date: "YYYY-MM-DD", url: "posts/filename.html" }
+  {
+    title: "getting into robotics software",
+    date: "2026-03-28",
+    url: "posts/robotics-roadmap.html",
+  },
 ]
