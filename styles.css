@@ -70,7 +70,7 @@ a { color: inherit; text-decoration: none; }
 /* ── Logo ─────────────────────────────────────────────────── */
 .logo-wrap {
   display: inline-block;
-  width: 100px;
+  width: 120px;
   border-radius: 18px;
   overflow: hidden;
   flex-shrink: 0;
@@ -203,7 +203,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .affil-text {
-  font-size: 0.98rem;
+  font-size: 1.1rem;
   font-weight: 300;
   color: var(--text);
   display: flex;
@@ -225,8 +225,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .school-seal {
-  width: 36px;
-  height: 36px;
+  width: 46px;
+  height: 46px;
   object-fit: contain;
   flex-shrink: 0;
   vertical-align: middle;
