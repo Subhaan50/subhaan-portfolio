@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://subhaansyed.com/</loc>
+    <loc>https://subhaan-portfolio.vercel.app/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://subhaansyed.com/building.html</loc>
+    <loc>https://subhaan-portfolio.vercel.app/building.html</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://subhaansyed.com/blog.html</loc>
+    <loc>https://subhaan-portfolio.vercel.app/blog.html</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://subhaansyed.com/archive.html</loc>
+    <loc>https://subhaan-portfolio.vercel.app/archive.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://subhaansyed.com/posts/robotics-roadmap.html</loc>
+    <loc>https://subhaan-portfolio.vercel.app/posts/robotics-roadmap.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
