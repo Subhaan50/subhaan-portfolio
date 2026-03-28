@@ -69,7 +69,7 @@ a { color: inherit; text-decoration: none; }
 /* ── Logo ─────────────────────────────────────────────────── */
 .logo-wrap {
   display: inline-block;
-  width: 82px;
+  width: 100px;
   border-radius: 18px;
   overflow: hidden;
   flex-shrink: 0;
