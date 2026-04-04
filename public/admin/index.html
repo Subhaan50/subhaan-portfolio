@@ -569,13 +569,15 @@ function switchTab(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'))
   event.target.classList.add('active')
   document.getElementById(`panel-${name}`).classList.add('active')
+  // Init Quill lazily — only when Blog tab is visible so Quill can measure the element
+  if (name === 'blog') initQuill()
 }
 
 // ── Load all ────────────────────────────────────────────────
 function loadAll() {
   loadThoughts()
   loadReading()
-  loadBlog()
+  loadBlogData()  // loads post list only — Quill inits lazily on tab click
   loadVideos()
   loadCurrently()
 }
@@ -802,13 +804,15 @@ function initQuill() {
   })
 }
 
-async function loadBlog() {
-  initQuill()
+async function loadBlogData() {
   try {
     const { data } = await readJson('public/data/posts.json')
     postsData = data
     renderBlogList()
-  } catch(e) { console.error(e) }
+  } catch(e) {
+    setStatus('blog', 'Error loading posts: ' + e.message, true)
+    console.error(e)
+  }
 }
 
 function renderBlogList() {
