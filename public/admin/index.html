@@ -490,6 +490,8 @@ function showPanel() {
   document.getElementById('login-screen').style.display = 'none'
   document.getElementById('admin-panel').style.display = 'block'
   loadAll()
+  const saved = localStorage.getItem('admin_tab')
+  if (saved) switchTab(saved)
 }
 
 // ── GitHub API helpers ──────────────────────────────────────
@@ -563,13 +565,14 @@ function setStatus(tab, msg, isErr) {
 }
 
 // ── Tabs ────────────────────────────────────────────────────
-function switchTab(name) {
+function switchTab(name, fromBtn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'))
-  event.target.classList.add('active')
+  const btn = fromBtn || document.querySelector(`.tab[onclick="switchTab('${name}')"]`)
+  if (btn) btn.classList.add('active')
   document.getElementById(`panel-${name}`).classList.add('active')
-  // Init Quill lazily — only when Blog tab is visible so Quill can measure the element
   if (name === 'blog') initQuill()
+  localStorage.setItem('admin_tab', name)
 }
 
 // ── Load all ────────────────────────────────────────────────
