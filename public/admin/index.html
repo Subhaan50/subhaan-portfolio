@@ -450,7 +450,10 @@
       <label>Thinking about (optional)</label>
       <input type="text" id="currently-thinking" placeholder="Topic or idea" />
     </div>
-    <button class="btn btn-gold" onclick="saveCurrently()">Save</button>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn btn-gold" onclick="saveCurrently()">Save</button>
+      <button class="btn" onclick="saveAndArchiveCurrently()">Save &amp; Archive</button>
+    </div>
   </div>
 </div>
 
@@ -973,18 +976,18 @@ function generatePostHtml({ title, subtitle, dateLabel, updatedLabel, html }) {
     <aside class="sidebar">
       <div class="sidebar-inner">
         <div class="sidebar-top">
-          <a href="/index.html" class="logo-wrap" aria-label="Home">
+          <a href="/" class="logo-wrap" aria-label="Home">
             <img src="/logo.png" class="logo" alt="" oncontextmenu="return false" draggable="false" />
           </a>
           <nav class="nav" aria-label="Main navigation">
             <ul>
-              <li><a href="/index.html" class="nav-link">Home</a></li>
-              <li><a href="/building.html" class="nav-link">Building</a></li>
-              <li><a href="/blog.html" class="nav-link active">Blog</a></li>
-              <li><a href="/thoughts.html" class="nav-link">Thoughts</a></li>
-              <li><a href="/reading.html" class="nav-link">Reading</a></li>
-              <li><a href="/videos.html" class="nav-link">Videos</a></li>
-              <li><a href="/archive.html" class="nav-link">Archive</a></li>
+              <li><a href="/" class="nav-link">Home</a></li>
+              <li><a href="/building" class="nav-link">Building</a></li>
+              <li><a href="/blog" class="nav-link active">Blog</a></li>
+              <li><a href="/thoughts" class="nav-link">Thoughts</a></li>
+              <li><a href="/reading" class="nav-link">Reading</a></li>
+              <li><a href="/videos" class="nav-link">Videos</a></li>
+              <li><a href="/archive" class="nav-link">Archive</a></li>
             </ul>
           </nav>
         </div>
@@ -999,7 +1002,7 @@ function generatePostHtml({ title, subtitle, dateLabel, updatedLabel, html }) {
       </div>
     </aside>
     <main class="content">
-      <a href="/blog.html" class="back-link">← Blog</a>
+      <a href="/blog" class="back-link">← Blog</a>
       <div class="post-header">
         <h1 class="post-title">${escHtml(title)}</h1>
         ${subtitle ? `<p class="post-subtitle">${escHtml(subtitle)}</p>` : ''}
@@ -1125,6 +1128,24 @@ async function saveCurrently() {
   try {
     await writeJson('public/data/currently.json', data, 'update currently')
     setStatus('currently', 'Saved!')
+  } catch(e) { setStatus('currently', e.message, true) }
+}
+
+async function saveAndArchiveCurrently() {
+  const newText = document.getElementById('currently-text').value.trim()
+  if (!newText) { setStatus('currently', 'Status text is required.', true); return }
+  try {
+    setStatus('currently', 'Archiving...')
+    const existing = await readJson('public/data/currently.json')
+    const oldText = existing.data && existing.data.text
+    if (oldText) await archiveEntry(oldText)
+    const data = {
+      text:     newText,
+      reading:  document.getElementById('currently-reading').value.trim(),
+      thinking: document.getElementById('currently-thinking').value.trim(),
+    }
+    await writeJson('public/data/currently.json', data, 'update currently')
+    setStatus('currently', 'Saved & archived!')
   } catch(e) { setStatus('currently', e.message, true) }
 }
 

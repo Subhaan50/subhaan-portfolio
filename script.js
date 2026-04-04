@@ -3,9 +3,8 @@ function setActiveNav() {
   const path = window.location.pathname
   document.querySelectorAll('.nav-link').forEach(link => {
     const href = link.getAttribute('href')
-    const isHome = (href === 'index.html' || href === './index.html' || href === '../index.html') &&
-                   (path === '/' || path.endsWith('index.html'))
-    const isMatch = path.endsWith(href.replace('../', ''))
+    const isHome = href === '/' && (path === '/' || path === '/index.html')
+    const isMatch = href !== '/' && (path === href || path === href + '.html' || path.startsWith(href + '/'))
     link.classList.toggle('active', isHome || isMatch)
   })
 }
