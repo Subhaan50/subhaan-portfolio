@@ -499,7 +499,8 @@ function showPanel() {
 
 // ── GitHub API helpers ──────────────────────────────────────
 async function ghGet(path) {
-  const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`, {
+  const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}&t=${Date.now()}`, {
+    cache: 'no-store',
     headers: { Authorization: `Bearer ${getToken()}`, 'X-GitHub-Api-Version': '2022-11-28' }
   })
   if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`)
@@ -755,6 +756,8 @@ async function deleteReading(idx) {
 let postsData = []
 let quill
 let editingPostIdx = null
+let editingPostRepoPath = null
+let editingPostSha = null
 
 function initQuill() {
   if (quill) return
@@ -832,6 +835,8 @@ function renderBlogList() {
 
 function cancelBlogEdit() {
   editingPostIdx = null
+  editingPostRepoPath = null
+  editingPostSha = null
   document.getElementById('blog-title').value = ''
   document.getElementById('blog-subtitle').value = ''
   document.getElementById('blog-slug').value = ''
@@ -853,6 +858,8 @@ async function editPost(idx) {
   try {
     const repoPath = await getPostRepoPath(p.url)
     const file = await ghGet(repoPath)
+    editingPostRepoPath = repoPath
+    editingPostSha = file.sha
     const raw = decodeURIComponent(escape(atob(file.content)))
     const doc = new DOMParser().parseFromString(raw, 'text/html')
     const titleEl    = doc.querySelector('.post-title')
@@ -896,9 +903,9 @@ async function publishPost() {
     const postHtml = generatePostHtml({ title, subtitle, dateLabel, updatedLabel, html })
     try {
       setStatus('blog', 'Updating...')
-      const repoPath = await getPostRepoPath(postsData[editingPostIdx].url)
-      const existing = await ghGet(repoPath)
-      await ghPut(repoPath, postHtml, `update post: ${title}`, existing.sha)
+      const repoPath = editingPostRepoPath || await getPostRepoPath(postsData[editingPostIdx].url)
+      const sha = editingPostSha || (await ghGet(repoPath)).sha
+      await ghPut(repoPath, postHtml, `update post: ${title}`, sha)
       postsData[editingPostIdx] = { ...orig, title, updatedDate }
       await writeJson('public/data/posts.json', postsData, `update post entry: ${title}`)
       setStatus('blog', 'Post updated!')
