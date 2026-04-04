@@ -99,12 +99,13 @@ subhaan-portfolio/
 │   │   ├── reading.json       # Reading links
 │   │   ├── videos.json        # YouTube video entries
 │   │   └── archive.json       # Archived entries
+│   ├── posts/                 # Blog post HTML files (created by admin panel)
 │   ├── admin/
 │   │   └── index.html         # Admin panel (self-contained, no build step)
 │   ├── logo.png
 │   └── favicon.png
 ├── posts/
-│   └── robotics-roadmap.html  # Individual blog post pages
+│   └── robotics-roadmap.html  # Legacy — original post (pre-admin)
 ├── index.html                 # Home
 ├── building.html              # Building
 ├── blog.html                  # Blog listing

@@ -838,11 +838,18 @@ function cancelBlogEdit() {
   document.getElementById('blog-cancel-btn').style.display = 'none'
 }
 
+// Returns the actual repo path for a post (new posts live in public/posts/, old ones in posts/)
+async function getPostRepoPath(url) {
+  try { await ghGet(`public/${url}`); return `public/${url}` } catch {}
+  return url
+}
+
 async function editPost(idx) {
   const p = postsData[idx]
   setStatus('blog', 'Loading post...')
   try {
-    const file = await ghGet(p.url)
+    const repoPath = await getPostRepoPath(p.url)
+    const file = await ghGet(repoPath)
     const raw = decodeURIComponent(escape(atob(file.content)))
     const doc = new DOMParser().parseFromString(raw, 'text/html')
     const titleEl    = doc.querySelector('.post-title')
@@ -873,7 +880,8 @@ async function publishPost() {
     return
   }
 
-  const postPath = `posts/${slug}.html`
+  const postPath = `public/posts/${slug}.html`
+  const postUrl  = `posts/${slug}.html`
 
   if (editingPostIdx !== null) {
     // Update existing post
@@ -885,8 +893,9 @@ async function publishPost() {
     const postHtml = generatePostHtml({ title, subtitle, dateLabel, updatedLabel, html })
     try {
       setStatus('blog', 'Updating...')
-      const existing = await ghGet(postPath)
-      await ghPut(postPath, postHtml, `update post: ${title}`, existing.sha)
+      const repoPath = await getPostRepoPath(postsData[editingPostIdx].url)
+      const existing = await ghGet(repoPath)
+      await ghPut(repoPath, postHtml, `update post: ${title}`, existing.sha)
       postsData[editingPostIdx] = { ...orig, title, updatedDate }
       await writeJson('public/data/posts.json', postsData, `update post entry: ${title}`)
       setStatus('blog', 'Post updated!')
@@ -905,7 +914,7 @@ async function publishPost() {
   try {
     setStatus('blog', 'Publishing...')
     await ghPut(postPath, postHtml, `add post: ${title}`)
-    postsData.push({ title, date: today, url: postPath })
+    postsData.push({ title, date: today, url: postUrl })
     await writeJson('public/data/posts.json', postsData, `add post entry: ${title}`)
     document.getElementById('blog-title').value = ''
     document.getElementById('blog-subtitle').value = ''
