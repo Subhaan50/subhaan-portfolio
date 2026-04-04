@@ -371,7 +371,10 @@
       <label>Commentary (optional)</label>
       <textarea id="reading-commentary" placeholder="Brief note on why it's interesting..." style="min-height:60px;"></textarea>
     </div>
-    <button class="btn btn-gold" onclick="addReading()">Add Link</button>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <button class="btn btn-gold" id="reading-submit-btn" onclick="addReading()">Add Link</button>
+      <button class="btn btn-sm" id="reading-cancel-btn" onclick="cancelReadingEdit()" style="display:none;">Cancel Edit</button>
+    </div>
     <hr class="sep" />
     <p class="section-heading">All Links</p>
     <div id="reading-list"></div>
@@ -402,8 +405,9 @@
       <div id="blog-editor-wrap">
         <div id="quill-editor"></div>
       </div>
-      <div style="margin-top:16px;">
-        <button class="btn btn-gold" onclick="publishPost()">Publish Post</button>
+      <div style="margin-top:16px;display:flex;gap:12px;align-items:center;">
+        <button class="btn btn-gold" id="blog-submit-btn" onclick="publishPost()">Publish Post</button>
+        <button class="btn btn-sm" id="blog-cancel-btn" onclick="cancelBlogEdit()" style="display:none;">Cancel Edit</button>
       </div>
       <hr class="sep" />
       <p class="section-heading">Published Posts</p>
@@ -417,8 +421,8 @@
     <p class="section-heading">Add Video</p>
     <div class="form-row">
       <div class="field">
-        <label>YouTube Video ID</label>
-        <input type="text" id="video-id" placeholder="dQw4w9WgXcQ" />
+        <label>YouTube URL or Video ID</label>
+        <input type="text" id="video-id" placeholder="https://youtube.com/watch?v=... or dQw4w9WgXcQ" />
       </div>
       <div class="field">
         <label>Title</label>
@@ -598,6 +602,7 @@ function renderThoughtsList() {
     return `<div class="thought-row">
       <span class="thought-row-text">${escHtml(t.text)}</span>
       <span class="thought-row-date">${dateStr} · ${timeStr}</span>
+      <button class="btn btn-sm" onclick="archiveThought(${idx})">Archive</button>
       <button class="btn btn-sm btn-danger" onclick="deleteThought(${idx})">Delete</button>
     </div>`
   }).join('')
@@ -615,8 +620,20 @@ async function addThought() {
   } catch(e) { setStatus('thoughts', e.message, true); thoughtsData.pop() }
 }
 
+async function archiveThought(idx) {
+  const t = thoughtsData[idx]
+  if (!confirm('Archive this thought?')) return
+  try {
+    await archiveEntry(t.text, t.datetime.slice(0, 10))
+    thoughtsData.splice(idx, 1)
+    await writeJson('public/data/thoughts.json', thoughtsData, 'archive thought')
+    setStatus('thoughts', 'Archived.')
+    renderThoughtsList()
+  } catch(e) { setStatus('thoughts', e.message, true) }
+}
+
 async function deleteThought(idx) {
-  if (!confirm('Delete this thought?')) return
+  if (!confirm('Permanently delete this thought?')) return
   thoughtsData.splice(idx, 1)
   try {
     await writeJson('public/data/thoughts.json', thoughtsData, 'delete thought')
@@ -627,6 +644,7 @@ async function deleteThought(idx) {
 
 // ── Reading ──────────────────────────────────────────────────
 let readingData = []
+let editingReadingIdx = null
 
 async function loadReading() {
   try {
@@ -647,9 +665,31 @@ function renderReadingList() {
         ${r.commentary ? `<div class="reading-row-commentary">${escHtml(r.commentary)}</div>` : ''}
       </div>
       <span style="font-size:0.72rem;color:var(--muted);white-space:nowrap;">${r.date}</span>
+      <button class="btn btn-sm" onclick="editReading(${idx})">Edit</button>
+      <button class="btn btn-sm" onclick="archiveReading(${idx})">Archive</button>
       <button class="btn btn-sm btn-danger" onclick="deleteReading(${idx})">Delete</button>
     </div>`
   }).join('')
+}
+
+function editReading(idx) {
+  const r = readingData[idx]
+  document.getElementById('reading-title').value = r.title
+  document.getElementById('reading-url').value = r.url
+  document.getElementById('reading-commentary').value = r.commentary || ''
+  editingReadingIdx = idx
+  document.getElementById('reading-submit-btn').textContent = 'Update Link'
+  document.getElementById('reading-cancel-btn').style.display = 'inline-block'
+  document.getElementById('reading-title').focus()
+}
+
+function cancelReadingEdit() {
+  editingReadingIdx = null
+  document.getElementById('reading-title').value = ''
+  document.getElementById('reading-url').value = ''
+  document.getElementById('reading-commentary').value = ''
+  document.getElementById('reading-submit-btn').textContent = 'Add Link'
+  document.getElementById('reading-cancel-btn').style.display = 'none'
 }
 
 async function addReading() {
@@ -658,6 +698,19 @@ async function addReading() {
   const commentary = document.getElementById('reading-commentary').value.trim()
   if (!title || !url) return
   const today = new Date().toISOString().slice(0, 10)
+
+  if (editingReadingIdx !== null) {
+    const orig = readingData[editingReadingIdx]
+    readingData[editingReadingIdx] = { title, url, commentary, date: orig.date }
+    try {
+      await writeJson('public/data/reading.json', readingData, 'update reading link')
+      setStatus('reading', 'Updated!')
+      cancelReadingEdit()
+      renderReadingList()
+    } catch(e) { setStatus('reading', e.message, true) }
+    return
+  }
+
   readingData.push({ title, url, commentary, date: today })
   try {
     await writeJson('public/data/reading.json', readingData, 'add reading link')
@@ -669,8 +722,20 @@ async function addReading() {
   } catch(e) { setStatus('reading', e.message, true); readingData.pop() }
 }
 
+async function archiveReading(idx) {
+  const r = readingData[idx]
+  if (!confirm('Archive this link?')) return
+  try {
+    await archiveEntry(r.title, r.date)
+    readingData.splice(idx, 1)
+    await writeJson('public/data/reading.json', readingData, 'archive reading link')
+    setStatus('reading', 'Archived.')
+    renderReadingList()
+  } catch(e) { setStatus('reading', e.message, true) }
+}
+
 async function deleteReading(idx) {
-  if (!confirm('Delete this link?')) return
+  if (!confirm('Permanently delete this link?')) return
   readingData.splice(idx, 1)
   try {
     await writeJson('public/data/reading.json', readingData, 'delete reading link')
@@ -682,6 +747,7 @@ async function deleteReading(idx) {
 // ── Blog ─────────────────────────────────────────────────────
 let postsData = []
 let quill
+let editingPostIdx = null
 
 function initQuill() {
   if (quill) return
@@ -752,9 +818,46 @@ function renderBlogList() {
       <span>${escHtml(p.title)}</span>
       <span style="font-size:0.72rem;color:var(--muted);">${p.date}</span>
       <a href="/${p.url}" target="_blank" class="btn btn-sm">View</a>
+      <button class="btn btn-sm" onclick="editPost(${idx})">Edit</button>
+      <button class="btn btn-sm" onclick="archivePost(${idx})">Archive</button>
       <button class="btn btn-sm btn-danger" onclick="deletePost(${idx})">Delete</button>
     </div>`
   }).join('')
+}
+
+function cancelBlogEdit() {
+  editingPostIdx = null
+  document.getElementById('blog-title').value = ''
+  document.getElementById('blog-subtitle').value = ''
+  document.getElementById('blog-slug').value = ''
+  document.getElementById('blog-slug').disabled = false
+  quill.setContents([])
+  document.getElementById('blog-submit-btn').textContent = 'Publish Post'
+  document.getElementById('blog-cancel-btn').style.display = 'none'
+}
+
+async function editPost(idx) {
+  const p = postsData[idx]
+  setStatus('blog', 'Loading post...')
+  try {
+    const file = await ghGet(p.url)
+    const raw = decodeURIComponent(escape(atob(file.content)))
+    const doc = new DOMParser().parseFromString(raw, 'text/html')
+    const titleEl    = doc.querySelector('.post-title')
+    const subtitleEl = doc.querySelector('.post-subtitle')
+    const bodyEl     = doc.querySelector('.post-body')
+    document.getElementById('blog-title').value    = titleEl    ? titleEl.textContent.trim()    : p.title
+    document.getElementById('blog-subtitle').value = subtitleEl ? subtitleEl.textContent.trim() : ''
+    const slug = p.url.replace('posts/', '').replace('.html', '')
+    document.getElementById('blog-slug').value    = slug
+    document.getElementById('blog-slug').disabled = true
+    quill.root.innerHTML = bodyEl ? bodyEl.innerHTML : ''
+    editingPostIdx = idx
+    document.getElementById('blog-submit-btn').textContent = 'Update Post'
+    document.getElementById('blog-cancel-btn').style.display = 'inline-block'
+    document.getElementById('blog-title').focus()
+    setStatus('blog', 'Post loaded — edit and hit Update Post.')
+  } catch(e) { setStatus('blog', 'Could not load post: ' + e.message, true) }
 }
 
 async function publishPost() {
@@ -768,21 +871,37 @@ async function publishPost() {
     return
   }
 
+  const postPath = `posts/${slug}.html`
+
+  if (editingPostIdx !== null) {
+    // Update existing post
+    const orig = postsData[editingPostIdx]
+    const d = new Date(orig.date)
+    const dateLabel = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    const postHtml = generatePostHtml({ title, subtitle, dateLabel, html })
+    try {
+      setStatus('blog', 'Updating...')
+      await ghPut(postPath, postHtml, `update post: ${title}`)
+      postsData[editingPostIdx] = { ...orig, title }
+      await writeJson('public/data/posts.json', postsData, `update post entry: ${title}`)
+      setStatus('blog', 'Post updated!')
+      cancelBlogEdit()
+      renderBlogList()
+    } catch(e) { setStatus('blog', e.message, true) }
+    return
+  }
+
+  // New post
   const today = new Date().toISOString().slice(0, 10)
   const d = new Date()
   const dateLabel = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-  const postPath = `posts/${slug}.html`
-  const postUrl  = postPath
-
   const postHtml = generatePostHtml({ title, subtitle, dateLabel, html })
 
   try {
     setStatus('blog', 'Publishing...')
     await ghPut(postPath, postHtml, `add post: ${title}`)
-
-    postsData.push({ title, date: today, url: postUrl })
+    postsData.push({ title, date: today, url: postPath })
     await writeJson('public/data/posts.json', postsData, `add post entry: ${title}`)
-
     document.getElementById('blog-title').value = ''
     document.getElementById('blog-subtitle').value = ''
     document.getElementById('blog-slug').value = ''
@@ -887,12 +1006,24 @@ function generatePostHtml({ title, subtitle, dateLabel, html }) {
 </html>`
 }
 
+async function archivePost(idx) {
+  const p = postsData[idx]
+  if (!confirm('Archive this post?')) return
+  try {
+    await archiveEntry(p.title, p.date)
+    postsData.splice(idx, 1)
+    await writeJson('public/data/posts.json', postsData, 'archive post')
+    setStatus('blog', 'Archived.')
+    renderBlogList()
+  } catch(e) { setStatus('blog', e.message, true) }
+}
+
 async function deletePost(idx) {
-  if (!confirm('Delete this post from the list? (The HTML file will remain but be unlinked.)')) return
+  if (!confirm('Permanently remove this post from the list?')) return
   postsData.splice(idx, 1)
   try {
     await writeJson('public/data/posts.json', postsData, 'delete post entry')
-    setStatus('blog', 'Post removed from list.')
+    setStatus('blog', 'Deleted.')
     renderBlogList()
   } catch(e) { setStatus('blog', e.message, true) }
 }
@@ -916,15 +1047,17 @@ function renderVideosList() {
     return `<div class="video-row">
       <span>${escHtml(v.title)}</span>
       <span style="font-size:0.72rem;color:var(--muted);">${escHtml(v.youtubeId)}</span>
+      <button class="btn btn-sm" onclick="archiveVideo(${idx})">Archive</button>
       <button class="btn btn-sm btn-danger" onclick="deleteVideo(${idx})">Delete</button>
     </div>`
   }).join('')
 }
 
 async function addVideo() {
-  const youtubeId = document.getElementById('video-id').value.trim()
-  const title     = document.getElementById('video-title').value.trim()
-  if (!youtubeId || !title) return
+  const raw   = document.getElementById('video-id').value.trim()
+  const title = document.getElementById('video-title').value.trim()
+  if (!raw || !title) return
+  const youtubeId = extractYouTubeId(raw)
   videosData.push({ youtubeId, title })
   try {
     await writeJson('public/data/videos.json', videosData, 'add video')
@@ -935,8 +1068,20 @@ async function addVideo() {
   } catch(e) { setStatus('videos', e.message, true); videosData.pop() }
 }
 
+async function archiveVideo(idx) {
+  const v = videosData[idx]
+  if (!confirm('Archive this video?')) return
+  try {
+    await archiveEntry(v.title, new Date().toISOString().slice(0, 10))
+    videosData.splice(idx, 1)
+    await writeJson('public/data/videos.json', videosData, 'archive video')
+    setStatus('videos', 'Archived.')
+    renderVideosList()
+  } catch(e) { setStatus('videos', e.message, true) }
+}
+
 async function deleteVideo(idx) {
-  if (!confirm('Delete this video?')) return
+  if (!confirm('Permanently delete this video?')) return
   videosData.splice(idx, 1)
   try {
     await writeJson('public/data/videos.json', videosData, 'delete video')
@@ -965,6 +1110,23 @@ async function saveCurrently() {
     await writeJson('public/data/currently.json', data, 'update currently')
     setStatus('currently', 'Saved!')
   } catch(e) { setStatus('currently', e.message, true) }
+}
+
+// ── Archive helper ────────────────────────────────────────────
+async function archiveEntry(text, date) {
+  const today = new Date().toISOString().slice(0, 10)
+  let archiveData = []
+  let sha
+  try { const f = await readJson('public/data/archive.json'); archiveData = f.data; sha = f.sha } catch {}
+  archiveData.push({ text, from: date || today, to: today })
+  await writeJson('public/data/archive.json', archiveData, `archive: ${text.slice(0, 40)}`)
+}
+
+// ── YouTube ID extractor ──────────────────────────────────────
+function extractYouTubeId(input) {
+  input = input.trim()
+  const match = input.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
+  return match ? match[1] : input
 }
 
 // ── Utils ─────────────────────────────────────────────────────
