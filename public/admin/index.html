@@ -265,9 +265,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      padding: 12px 0;
+      padding: 16px 0;
       border-bottom: 1px solid var(--border);
-      font-size: 0.88rem;
+      font-size: 1rem;
     }
 
     .post-row:first-child { border-top: 1px solid var(--border); }
@@ -880,7 +880,8 @@ async function publishPost() {
     const postHtml = generatePostHtml({ title, subtitle, dateLabel, html })
     try {
       setStatus('blog', 'Updating...')
-      await ghPut(postPath, postHtml, `update post: ${title}`)
+      const existing = await ghGet(postPath)
+      await ghPut(postPath, postHtml, `update post: ${title}`, existing.sha)
       postsData[editingPostIdx] = { ...orig, title }
       await writeJson('public/data/posts.json', postsData, `update post entry: ${title}`)
       setStatus('blog', 'Post updated!')
