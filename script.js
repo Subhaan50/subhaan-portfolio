@@ -62,7 +62,7 @@ async function renderBlog() {
     }
     const items = posts.slice().sort((a, b) => new Date(b.date) - new Date(a.date)).map(post => {
       const d = new Date(post.date)
-      const label = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       return `
         <li class="entry-item">
           <a class="entry-link entry-link--post" href="${post.url}">${post.title}</a>
@@ -115,7 +115,7 @@ async function renderReading() {
     }
     const items = reading.slice().reverse().map(r => {
       const d = new Date(r.date)
-      const dateStr = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+      const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       return `
         <li class="entry-item reading-entry">
           <div class="reading-main">
