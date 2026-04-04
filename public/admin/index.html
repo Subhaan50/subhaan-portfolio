@@ -752,24 +752,26 @@ let editingPostIdx = null
 function initQuill() {
   if (quill) return
 
-  // Register image resize module
-  Quill.register('modules/imageResize', window.ImageResize)
+  // Register image resize module if available
+  const hasResize = typeof window.ImageResize !== 'undefined'
+  if (hasResize) {
+    try { Quill.register('modules/imageResize', window.ImageResize) } catch(e) {}
+  }
 
-  quill = new Quill('#quill-editor', {
-    theme: 'snow',
-    modules: {
-      imageResize: {},
-      toolbar: [
-        [{ header: [1, 2, 3, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ align: [] }],
-        ['blockquote', 'code-block'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['link', 'image'],
-        ['clean']
-      ]
-    }
-  })
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ align: [] }],
+      ['blockquote', 'code-block'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link', 'image'],
+      ['clean']
+    ]
+  }
+  if (hasResize) modules.imageResize = {}
+
+  quill = new Quill('#quill-editor', { theme: 'snow', modules })
 
   // Ctrl+V image paste — uploads to GitHub and inserts URL
   quill.root.addEventListener('paste', async (e) => {
