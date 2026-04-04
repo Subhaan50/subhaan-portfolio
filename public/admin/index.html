@@ -9,10 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
-  <!-- Quill.js 1.3.7 + image resize -->
+  <!-- Quill.js 1.3.7 -->
   <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
   <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
-  <script src="https://unpkg.com/quill-image-resize-module/image-resize.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -754,26 +753,20 @@ let editingPostIdx = null
 function initQuill() {
   if (quill) return
 
-  // Register image resize module if available
-  const hasResize = typeof window.ImageResize !== 'undefined'
-  if (hasResize) {
-    try { Quill.register('modules/imageResize', window.ImageResize) } catch(e) {}
-  }
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ align: [] }],
-      ['blockquote', 'code-block'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link', 'image'],
-      ['clean']
-    ]
-  }
-  if (hasResize) modules.imageResize = {}
-
-  quill = new Quill('#quill-editor', { theme: 'snow', modules })
+  quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ align: [] }],
+        ['blockquote', 'code-block'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'image'],
+        ['clean']
+      ]
+    }
+  })
 
   // Ctrl+V image paste — uploads to GitHub and inserts URL
   quill.root.addEventListener('paste', async (e) => {
