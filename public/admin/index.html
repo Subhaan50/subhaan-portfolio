@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Subhaan Syed</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+  <!-- Quill.js -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #F7F2EA;
+      --text:    #1A1A1A;
+      --sec:     #252220;
+      --muted:   #6B6760;
+      --gold:    #C9A050;
+      --border:  #E8E0D5;
+      --font:    'Cormorant Garamond', Georgia, serif;
+    }
+
+    html { font-size: 18px; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 40px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* ── Login ── */
+    #login-screen {
+      max-width: 420px;
+    }
+
+    #login-screen label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    #pat-input {
+      width: 100%;
+      padding: 10px 14px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    #login-error {
+      font-size: 0.8rem;
+      color: #c0392b;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      font-family: var(--font);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 9px 20px;
+      border: 1px solid var(--text);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      border-radius: 3px;
+    }
+
+    .btn:hover { background: var(--text); color: var(--bg); }
+
+    .btn-gold {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-gold:hover { background: var(--gold); color: var(--bg); }
+
+    .btn-sm {
+      font-size: 0.68rem;
+      padding: 6px 14px;
+    }
+
+    .btn-danger {
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+
+    .btn-danger:hover { background: #c0392b; color: #fff; }
+
+    /* ── Admin panel ── */
+    #admin-panel { display: none; }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 28px;
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .tab {
+      font-family: var(--font);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      margin-bottom: -1px;
+    }
+
+    .tab:hover { color: var(--text); }
+
+    .tab.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── Tab panels ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── Form elements ── */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 10px 14px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      resize: vertical;
+    }
+
+    .field textarea { min-height: 80px; line-height: 1.6; }
+
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    hr.sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── Status message ── */
+    .status {
+      font-size: 0.8rem;
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .status.ok { background: #e8f5e9; color: #2e7d32; display: block; }
+    .status.err { background: #fdecea; color: #c62828; display: block; }
+
+    /* ── Thoughts list ── */
+    .thought-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .thought-row:first-child { border-top: 1px solid var(--border); }
+
+    .thought-row-text {
+      flex: 1;
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    .thought-row-date {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Reading list ── */
+    .reading-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .reading-row:first-child { border-top: 1px solid var(--border); }
+
+    .reading-row-info { flex: 1; }
+    .reading-row-title { font-weight: 400; }
+    .reading-row-commentary { font-size: 0.78rem; color: var(--sec); font-style: italic; margin-top: 2px; }
+
+    /* ── Blog post list ── */
+    .post-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .post-row:first-child { border-top: 1px solid var(--border); }
+
+    /* ── Video list ── */
+    .video-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .video-row:first-child { border-top: 1px solid var(--border); }
+
+    /* ── Quill editor ── */
+    #blog-editor-wrap { max-width: 720px; }
+
+    .ql-container { font-family: var(--font); font-size: 1rem; min-height: 320px; }
+    .ql-toolbar { border-color: var(--border) !important; background: #fff; }
+    .ql-container { border-color: var(--border) !important; background: #fff; }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .form-row .field { flex: 1; }
+
+    .section-heading {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Login ── -->
+<div id="login-screen">
+  <h1>Admin</h1>
+  <p class="subtitle">Subhaan Syed — Site Management</p>
+  <label for="pat-input">GitHub Personal Access Token</label>
+  <input type="password" id="pat-input" placeholder="ghp_..." autocomplete="off" />
+  <div id="login-error">Invalid token or insufficient permissions.</div>
+  <button class="btn btn-gold" onclick="login()">Sign In</button>
+</div>
+
+<!-- ── Admin panel ── -->
+<div id="admin-panel">
+  <div class="top-bar">
+    <div>
+      <h1>Admin</h1>
+      <p class="subtitle">Subhaan Syed — Site Management</p>
+    </div>
+    <button class="btn btn-sm" onclick="logout()">Sign Out</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('thoughts')">Thoughts</button>
+    <button class="tab" onclick="switchTab('reading')">Reading</button>
+    <button class="tab" onclick="switchTab('blog')">Blog</button>
+    <button class="tab" onclick="switchTab('videos')">Videos</button>
+    <button class="tab" onclick="switchTab('currently')">Currently</button>
+  </div>
+
+  <!-- ── Thoughts ── -->
+  <div id="panel-thoughts" class="panel active">
+    <div id="status-thoughts" class="status"></div>
+    <p class="section-heading">New Thought</p>
+    <div class="field">
+      <label>Text</label>
+      <textarea id="thought-text" placeholder="What's on your mind..."></textarea>
+    </div>
+    <button class="btn btn-gold" onclick="addThought()">Post Thought</button>
+    <hr class="sep" />
+    <p class="section-heading">All Thoughts</p>
+    <div id="thoughts-list"></div>
+  </div>
+
+  <!-- ── Reading ── -->
+  <div id="panel-reading" class="panel">
+    <div id="status-reading" class="status"></div>
+    <p class="section-heading">Add Link</p>
+    <div class="form-row">
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="reading-title" placeholder="Article or paper title" />
+      </div>
+      <div class="field">
+        <label>URL</label>
+        <input type="url" id="reading-url" placeholder="https://..." />
+      </div>
+    </div>
+    <div class="field">
+      <label>Commentary (optional)</label>
+      <textarea id="reading-commentary" placeholder="Brief note on why it's interesting..." style="min-height:60px;"></textarea>
+    </div>
+    <button class="btn btn-gold" onclick="addReading()">Add Link</button>
+    <hr class="sep" />
+    <p class="section-heading">All Links</p>
+    <div id="reading-list"></div>
+  </div>
+
+  <!-- ── Blog ── -->
+  <div id="panel-blog" class="panel">
+    <div id="status-blog" class="status"></div>
+
+    <!-- Post list -->
+    <div id="blog-list-view">
+      <p class="section-heading">New Post</p>
+      <div class="form-row">
+        <div class="field">
+          <label>Title</label>
+          <input type="text" id="blog-title" placeholder="Post title" />
+        </div>
+        <div class="field">
+          <label>Subtitle (optional)</label>
+          <input type="text" id="blog-subtitle" placeholder="One-line description" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Slug (URL path, e.g. my-post-title)</label>
+        <input type="text" id="blog-slug" placeholder="my-post-title" />
+      </div>
+      <p class="section-heading" style="margin-top:20px;">Content — paste images with Ctrl+V</p>
+      <div id="blog-editor-wrap">
+        <div id="quill-editor"></div>
+      </div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-gold" onclick="publishPost()">Publish Post</button>
+      </div>
+      <hr class="sep" />
+      <p class="section-heading">Published Posts</p>
+      <div id="blog-list"></div>
+    </div>
+  </div>
+
+  <!-- ── Videos ── -->
+  <div id="panel-videos" class="panel">
+    <div id="status-videos" class="status"></div>
+    <p class="section-heading">Add Video</p>
+    <div class="form-row">
+      <div class="field">
+        <label>YouTube Video ID</label>
+        <input type="text" id="video-id" placeholder="dQw4w9WgXcQ" />
+      </div>
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="video-title" placeholder="Video title" />
+      </div>
+    </div>
+    <button class="btn btn-gold" onclick="addVideo()">Add Video</button>
+    <hr class="sep" />
+    <p class="section-heading">All Videos</p>
+    <div id="videos-list"></div>
+  </div>
+
+  <!-- ── Currently ── -->
+  <div id="panel-currently" class="panel">
+    <div id="status-currently" class="status"></div>
+    <p class="section-heading">Update Currently</p>
+    <div class="field">
+      <label>Status line</label>
+      <input type="text" id="currently-text" placeholder="finishing the semester." />
+    </div>
+    <div class="field">
+      <label>Reading (optional)</label>
+      <input type="text" id="currently-reading" placeholder="Book or article name" />
+    </div>
+    <div class="field">
+      <label>Thinking about (optional)</label>
+      <input type="text" id="currently-thinking" placeholder="Topic or idea" />
+    </div>
+    <button class="btn btn-gold" onclick="saveCurrently()">Save</button>
+  </div>
+</div>
+
+<script>
+// ── Config ──────────────────────────────────────────────────
+const REPO_OWNER = 'Subhaan50'
+const REPO_NAME  = 'subhaan-portfolio'
+const BRANCH     = 'main'
+
+// ── Auth ────────────────────────────────────────────────────
+function getToken() { return localStorage.getItem('admin_pat') || '' }
+
+async function login() {
+  const token = document.getElementById('pat-input').value.trim()
+  if (!token) return
+  // Verify token works by fetching repo info
+  const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`, {
+    headers: { Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28' }
+  })
+  if (!res.ok) {
+    document.getElementById('login-error').style.display = 'block'
+    return
+  }
+  localStorage.setItem('admin_pat', token)
+  document.getElementById('login-error').style.display = 'none'
+  showPanel()
+}
+
+function logout() {
+  localStorage.removeItem('admin_pat')
+  document.getElementById('admin-panel').style.display = 'none'
+  document.getElementById('login-screen').style.display = 'block'
+  document.getElementById('pat-input').value = ''
+}
+
+function showPanel() {
+  document.getElementById('login-screen').style.display = 'none'
+  document.getElementById('admin-panel').style.display = 'block'
+  loadAll()
+}
+
+// ── GitHub API helpers ──────────────────────────────────────
+async function ghGet(path) {
+  const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`, {
+    headers: { Authorization: `Bearer ${getToken()}`, 'X-GitHub-Api-Version': '2022-11-28' }
+  })
+  if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`)
+  return res.json()
+}
+
+async function ghPut(path, content, message, sha) {
+  const body = {
+    message,
+    content: btoa(unescape(encodeURIComponent(content))),
+    branch: BRANCH,
+  }
+  if (sha) body.sha = sha
+  const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      'Content-Type': 'application/json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    },
+    body: JSON.stringify(body)
+  })
+  if (!res.ok) {
+    const err = await res.json()
+    throw new Error(err.message || `PUT ${path} failed`)
+  }
+  return res.json()
+}
+
+async function readJson(path) {
+  const file = await ghGet(path)
+  return { data: JSON.parse(decodeURIComponent(escape(atob(file.content)))), sha: file.sha }
+}
+
+async function writeJson(path, data, message) {
+  let sha
+  try { const f = await ghGet(path); sha = f.sha } catch {}
+  return ghPut(path, JSON.stringify(data, null, 2) + '\n', message, sha)
+}
+
+// ── Status helpers ──────────────────────────────────────────
+function setStatus(tab, msg, isErr) {
+  const el = document.getElementById(`status-${tab}`)
+  el.textContent = msg
+  el.className = 'status ' + (isErr ? 'err' : 'ok')
+  setTimeout(() => { el.className = 'status' }, 4000)
+}
+
+// ── Tabs ────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'))
+  event.target.classList.add('active')
+  document.getElementById(`panel-${name}`).classList.add('active')
+}
+
+// ── Load all ────────────────────────────────────────────────
+function loadAll() {
+  loadThoughts()
+  loadReading()
+  loadBlog()
+  loadVideos()
+  loadCurrently()
+}
+
+// ── Thoughts ────────────────────────────────────────────────
+let thoughtsData = [], thoughtsSha = ''
+
+async function loadThoughts() {
+  try {
+    const { data, sha } = await readJson('public/data/thoughts.json')
+    thoughtsData = data; thoughtsSha = sha
+    renderThoughtsList()
+  } catch(e) { console.error(e) }
+}
+
+function renderThoughtsList() {
+  const el = document.getElementById('thoughts-list')
+  if (!thoughtsData.length) { el.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">No thoughts yet.</p>'; return }
+  el.innerHTML = thoughtsData.slice().reverse().map((t, i) => {
+    const idx = thoughtsData.length - 1 - i
+    const dt = new Date(t.datetime)
+    const dateStr = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    const timeStr = dt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+    return `<div class="thought-row">
+      <span class="thought-row-text">${escHtml(t.text)}</span>
+      <span class="thought-row-date">${dateStr} · ${timeStr}</span>
+      <button class="btn btn-sm btn-danger" onclick="deleteThought(${idx})">Delete</button>
+    </div>`
+  }).join('')
+}
+
+async function addThought() {
+  const text = document.getElementById('thought-text').value.trim()
+  if (!text) return
+  thoughtsData.push({ text, datetime: new Date().toISOString() })
+  try {
+    await writeJson('public/data/thoughts.json', thoughtsData, 'add thought')
+    document.getElementById('thought-text').value = ''
+    setStatus('thoughts', 'Thought posted!')
+    renderThoughtsList()
+  } catch(e) { setStatus('thoughts', e.message, true); thoughtsData.pop() }
+}
+
+async function deleteThought(idx) {
+  if (!confirm('Delete this thought?')) return
+  thoughtsData.splice(idx, 1)
+  try {
+    await writeJson('public/data/thoughts.json', thoughtsData, 'delete thought')
+    setStatus('thoughts', 'Deleted.')
+    renderThoughtsList()
+  } catch(e) { setStatus('thoughts', e.message, true) }
+}
+
+// ── Reading ──────────────────────────────────────────────────
+let readingData = []
+
+async function loadReading() {
+  try {
+    const { data } = await readJson('public/data/reading.json')
+    readingData = data
+    renderReadingList()
+  } catch(e) { console.error(e) }
+}
+
+function renderReadingList() {
+  const el = document.getElementById('reading-list')
+  if (!readingData.length) { el.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">No links yet.</p>'; return }
+  el.innerHTML = readingData.slice().reverse().map((r, i) => {
+    const idx = readingData.length - 1 - i
+    return `<div class="reading-row">
+      <div class="reading-row-info">
+        <div class="reading-row-title"><a href="${escHtml(r.url)}" target="_blank" rel="noopener noreferrer">${escHtml(r.title)}</a></div>
+        ${r.commentary ? `<div class="reading-row-commentary">${escHtml(r.commentary)}</div>` : ''}
+      </div>
+      <span style="font-size:0.72rem;color:var(--muted);white-space:nowrap;">${r.date}</span>
+      <button class="btn btn-sm btn-danger" onclick="deleteReading(${idx})">Delete</button>
+    </div>`
+  }).join('')
+}
+
+async function addReading() {
+  const title = document.getElementById('reading-title').value.trim()
+  const url   = document.getElementById('reading-url').value.trim()
+  const commentary = document.getElementById('reading-commentary').value.trim()
+  if (!title || !url) return
+  const today = new Date().toISOString().slice(0, 10)
+  readingData.push({ title, url, commentary, date: today })
+  try {
+    await writeJson('public/data/reading.json', readingData, 'add reading link')
+    document.getElementById('reading-title').value = ''
+    document.getElementById('reading-url').value = ''
+    document.getElementById('reading-commentary').value = ''
+    setStatus('reading', 'Link added!')
+    renderReadingList()
+  } catch(e) { setStatus('reading', e.message, true); readingData.pop() }
+}
+
+async function deleteReading(idx) {
+  if (!confirm('Delete this link?')) return
+  readingData.splice(idx, 1)
+  try {
+    await writeJson('public/data/reading.json', readingData, 'delete reading link')
+    setStatus('reading', 'Deleted.')
+    renderReadingList()
+  } catch(e) { setStatus('reading', e.message, true) }
+}
+
+// ── Blog ─────────────────────────────────────────────────────
+let postsData = []
+let quill
+
+function initQuill() {
+  if (quill) return
+  quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        [{ header: [2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        ['blockquote', 'code-block'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'image'],
+        ['clean']
+      ]
+    }
+  })
+
+  // Ctrl+V image paste
+  quill.root.addEventListener('paste', async (e) => {
+    const items = e.clipboardData && e.clipboardData.items
+    if (!items) return
+    for (const item of items) {
+      if (!item.type.startsWith('image/')) continue
+      e.preventDefault()
+      const file = item.getAsFile()
+      const ext = file.type.split('/')[1].replace('jpeg', 'jpg')
+      const filename = `images/${Date.now()}.${ext}`
+      const reader = new FileReader()
+      reader.onload = async (ev) => {
+        const base64 = ev.target.result.split(',')[1]
+        setStatus('blog', 'Uploading image...')
+        try {
+          await ghPut(`public/${filename}`, atob(base64).split('').map(c => c.charCodeAt(0)), `upload image ${filename}`)
+          const url = `/${filename}`
+          const range = quill.getSelection(true)
+          quill.insertEmbed(range.index, 'image', url)
+          setStatus('blog', 'Image uploaded!')
+        } catch(err) { setStatus('blog', 'Image upload failed: ' + err.message, true) }
+      }
+      reader.readAsDataURL(file)
+      break
+    }
+  })
+}
+
+async function loadBlog() {
+  initQuill()
+  try {
+    const { data } = await readJson('public/data/posts.json')
+    postsData = data
+    renderBlogList()
+  } catch(e) { console.error(e) }
+}
+
+function renderBlogList() {
+  const el = document.getElementById('blog-list')
+  if (!postsData.length) { el.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">No posts yet.</p>'; return }
+  el.innerHTML = postsData.slice().sort((a, b) => new Date(b.date) - new Date(a.date)).map((p, i) => {
+    const idx = postsData.findIndex(x => x.url === p.url)
+    return `<div class="post-row">
+      <span>${escHtml(p.title)}</span>
+      <span style="font-size:0.72rem;color:var(--muted);">${p.date}</span>
+      <a href="/${p.url}" target="_blank" class="btn btn-sm">View</a>
+      <button class="btn btn-sm btn-danger" onclick="deletePost(${idx})">Delete</button>
+    </div>`
+  }).join('')
+}
+
+async function publishPost() {
+  const title    = document.getElementById('blog-title').value.trim()
+  const subtitle = document.getElementById('blog-subtitle').value.trim()
+  const slug     = document.getElementById('blog-slug').value.trim().replace(/[^a-z0-9-]/gi, '-').toLowerCase()
+  const html     = quill.root.innerHTML
+
+  if (!title || !slug || html === '<p><br></p>' || !html) {
+    setStatus('blog', 'Title, slug, and content are required.', true)
+    return
+  }
+
+  const today = new Date().toISOString().slice(0, 10)
+  const d = new Date()
+  const dateLabel = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  const postPath = `posts/${slug}.html`
+  const postUrl  = postPath
+
+  const postHtml = generatePostHtml({ title, subtitle, dateLabel, html })
+
+  try {
+    setStatus('blog', 'Publishing...')
+    await ghPut(postPath, postHtml, `add post: ${title}`)
+
+    postsData.push({ title, date: today, url: postUrl })
+    await writeJson('public/data/posts.json', postsData, `add post entry: ${title}`)
+
+    document.getElementById('blog-title').value = ''
+    document.getElementById('blog-subtitle').value = ''
+    document.getElementById('blog-slug').value = ''
+    quill.setContents([])
+    setStatus('blog', 'Post published!')
+    renderBlogList()
+  } catch(e) { setStatus('blog', e.message, true) }
+}
+
+function generatePostHtml({ title, subtitle, dateLabel, html }) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escHtml(title)} — Subhaan Syed</title>
+  <meta name="description" content="${escHtml(subtitle || title)}" />
+  <meta name="author" content="Subhaan Syed" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="${escHtml(title)} — Subhaan Syed" />
+  <meta property="og:description" content="${escHtml(subtitle || title)}" />
+  <meta property="og:image" content="https://subhaan-portfolio.vercel.app/logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="${escHtml(title)} — Subhaan Syed" />
+  <meta name="twitter:description" content="${escHtml(subtitle || title)}" />
+  <meta name="twitter:image" content="https://subhaan-portfolio.vercel.app/logo.png" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .post-header { margin-bottom: 40px; }
+    .post-title { font-size: 1.9rem; font-weight: 400; letter-spacing: 0.01em; line-height: 1.25; margin-bottom: 10px; }
+    .post-subtitle { font-size: 0.88rem; font-weight: 400; color: var(--secondary); font-style: italic; margin-bottom: 6px; }
+    .post-date { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .post-body { font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--text); max-width: 560px; }
+    .post-body p + p { margin-top: 20px; }
+    .post-body h2 { font-size: 1.2rem; font-weight: 500; margin: 32px 0 12px; }
+    .post-body h3 { font-size: 1rem; font-weight: 500; margin: 24px 0 8px; }
+    .post-body ul, .post-body ol { padding-left: 24px; margin: 16px 0; }
+    .post-body li { margin-bottom: 6px; }
+    .post-body blockquote { border-left: 2px solid var(--gold); padding-left: 16px; color: var(--secondary); font-style: italic; margin: 20px 0; }
+    .post-body a { border-bottom: 1px solid var(--border); transition: color 0.2s, border-color 0.2s; }
+    .post-body a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+    .post-body img { max-width: 100%; border-radius: 4px; margin: 20px 0; }
+    .back-link { display: inline-block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; transition: color 0.2s; }
+    .back-link:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-top">
+          <a href="/index.html" class="logo-wrap" aria-label="Home">
+            <img src="/logo.png" class="logo" alt="" oncontextmenu="return false" draggable="false" />
+          </a>
+          <nav class="nav" aria-label="Main navigation">
+            <ul>
+              <li><a href="/index.html" class="nav-link">Home</a></li>
+              <li><a href="/building.html" class="nav-link">Building</a></li>
+              <li><a href="/blog.html" class="nav-link active">Blog</a></li>
+              <li><a href="/thoughts.html" class="nav-link">Thoughts</a></li>
+              <li><a href="/reading.html" class="nav-link">Reading</a></li>
+              <li><a href="/videos.html" class="nav-link">Videos</a></li>
+              <li><a href="/archive.html" class="nav-link">Archive</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <div class="socials">
+            <a href="https://x.com/thesubhaansyed" target="_blank" rel="noopener noreferrer" class="social-link">X</a>
+            <a href="https://www.linkedin.com/in/subhaans/" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+            <a href="https://github.com/Subhaan50" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+            <a href="mailto:subhaan.syed01@gmail.com" class="social-link">Email</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main class="content">
+      <a href="/blog.html" class="back-link">← Blog</a>
+      <div class="post-header">
+        <h1 class="post-title">${escHtml(title)}</h1>
+        ${subtitle ? `<p class="post-subtitle">${escHtml(subtitle)}</p>` : ''}
+        <p class="post-date">${dateLabel}</p>
+      </div>
+      <div class="post-body">
+        ${html}
+      </div>
+      <div class="mobile-footer">
+        <a href="https://x.com/thesubhaansyed" target="_blank" rel="noopener noreferrer" class="social-link">X</a>
+        <a href="https://www.linkedin.com/in/subhaans/" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+        <a href="https://github.com/Subhaan50" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+        <a href="mailto:subhaan.syed01@gmail.com" class="social-link">Email</a>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/script.js"><\/script>
+</body>
+</html>`
+}
+
+async function deletePost(idx) {
+  if (!confirm('Delete this post from the list? (The HTML file will remain but be unlinked.)')) return
+  postsData.splice(idx, 1)
+  try {
+    await writeJson('public/data/posts.json', postsData, 'delete post entry')
+    setStatus('blog', 'Post removed from list.')
+    renderBlogList()
+  } catch(e) { setStatus('blog', e.message, true) }
+}
+
+// ── Videos ────────────────────────────────────────────────────
+let videosData = []
+
+async function loadVideos() {
+  try {
+    const { data } = await readJson('public/data/videos.json')
+    videosData = data
+    renderVideosList()
+  } catch(e) { console.error(e) }
+}
+
+function renderVideosList() {
+  const el = document.getElementById('videos-list')
+  if (!videosData.length) { el.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">No videos yet.</p>'; return }
+  el.innerHTML = videosData.slice().reverse().map((v, i) => {
+    const idx = videosData.length - 1 - i
+    return `<div class="video-row">
+      <span>${escHtml(v.title)}</span>
+      <span style="font-size:0.72rem;color:var(--muted);">${escHtml(v.youtubeId)}</span>
+      <button class="btn btn-sm btn-danger" onclick="deleteVideo(${idx})">Delete</button>
+    </div>`
+  }).join('')
+}
+
+async function addVideo() {
+  const youtubeId = document.getElementById('video-id').value.trim()
+  const title     = document.getElementById('video-title').value.trim()
+  if (!youtubeId || !title) return
+  videosData.push({ youtubeId, title })
+  try {
+    await writeJson('public/data/videos.json', videosData, 'add video')
+    document.getElementById('video-id').value = ''
+    document.getElementById('video-title').value = ''
+    setStatus('videos', 'Video added!')
+    renderVideosList()
+  } catch(e) { setStatus('videos', e.message, true); videosData.pop() }
+}
+
+async function deleteVideo(idx) {
+  if (!confirm('Delete this video?')) return
+  videosData.splice(idx, 1)
+  try {
+    await writeJson('public/data/videos.json', videosData, 'delete video')
+    setStatus('videos', 'Deleted.')
+    renderVideosList()
+  } catch(e) { setStatus('videos', e.message, true) }
+}
+
+// ── Currently ─────────────────────────────────────────────────
+async function loadCurrently() {
+  try {
+    const { data } = await readJson('public/data/currently.json')
+    document.getElementById('currently-text').value    = data.text || ''
+    document.getElementById('currently-reading').value = data.reading || ''
+    document.getElementById('currently-thinking').value = data.thinking || ''
+  } catch(e) { console.error(e) }
+}
+
+async function saveCurrently() {
+  const data = {
+    text:     document.getElementById('currently-text').value.trim(),
+    reading:  document.getElementById('currently-reading').value.trim(),
+    thinking: document.getElementById('currently-thinking').value.trim(),
+  }
+  try {
+    await writeJson('public/data/currently.json', data, 'update currently')
+    setStatus('currently', 'Saved!')
+  } catch(e) { setStatus('currently', e.message, true) }
+}
+
+// ── Utils ─────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+}
+
+// ── Init ──────────────────────────────────────────────────────
+if (getToken()) showPanel()
+</script>
+</body>
+</html>
