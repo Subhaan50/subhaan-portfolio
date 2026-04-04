@@ -49,13 +49,13 @@ All content is managed through the **admin panel** at `/admin`. No code editing 
 | **Reading** | Add links with title, URL, and optional commentary. Edit, archive, or delete. |
 | **Blog** | Write posts in a rich text editor (Quill). Supports Ctrl+V image paste, headings, alignment, blockquotes, lists. Edit posts after publishing — shows original date + "Updated" date. |
 | **Videos** | Add YouTube videos by URL or video ID. Shows as embedded grid. |
-| **Currently** | Update the status line on the home page. |
+| **Currently** | Update the status line on the home page. Hit **Save** to update only, or **Save & Archive** to move the old status to the archive before saving the new one. |
 
 ### How blog publishing works
 
 1. Fill in Title, Subtitle (optional), Slug (URL path), and write content in the editor
-2. Hit **Publish Post** — this creates the HTML file in `posts/` and adds the entry to `posts.json` automatically
-3. Vercel redeploys within ~1 minute and the post is live
+2. Hit **Publish Post** — this creates the HTML file in `public/posts/` and adds the entry to `public/data/posts.json` automatically
+3. Vercel redeploys within ~1 minute and the post is live at `/posts/{slug}`
 4. To edit: click **Edit** on any post in the Published Posts list, make changes, hit **Update Post**
 
 ---
@@ -99,13 +99,11 @@ subhaan-portfolio/
 │   │   ├── reading.json       # Reading links
 │   │   ├── videos.json        # YouTube video entries
 │   │   └── archive.json       # Archived entries
-│   ├── posts/                 # Blog post HTML files (created by admin panel)
+│   ├── posts/                 # Blog post HTML files (all managed via admin panel)
 │   ├── admin/
 │   │   └── index.html         # Admin panel (self-contained, no build step)
 │   ├── logo.png
 │   └── favicon.png
-├── posts/
-│   └── robotics-roadmap.html  # Legacy — original post (pre-admin)
 ├── index.html                 # Home
 ├── building.html              # Building
 ├── blog.html                  # Blog listing
@@ -116,7 +114,7 @@ subhaan-portfolio/
 ├── styles.css                 # All styles and CSS variables
 ├── script.js                  # Client-side rendering (fetches from /data/*.json)
 ├── vite.config.js             # Build config
-├── vercel.json                # Vercel routing config
+├── vercel.json                # Vercel deployment config (cleanUrls: true)
 └── package.json
 ```
 

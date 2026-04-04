@@ -16,7 +16,6 @@ export default defineConfig({
         reading:          resolve(__dirname, 'reading.html'),
         videos:           resolve(__dirname, 'videos.html'),
         archive:          resolve(__dirname, 'archive.html'),
-        roboticsRoadmap:  resolve(__dirname, 'posts/robotics-roadmap.html'),
       },
     },
   },
