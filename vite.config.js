@@ -17,6 +17,12 @@ export default defineConfig({
         videos:           resolve(__dirname, 'videos.html'),
         archive:          resolve(__dirname, 'archive.html'),
       },
+      output: {
+        assetFileNames: (assetInfo) =>
+          assetInfo.name && assetInfo.name.endsWith('.css') ? 'styles[extname]' : '[name][extname]',
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].js',
+      },
     },
   },
 })
