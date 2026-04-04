@@ -877,12 +877,14 @@ async function publishPost() {
     const orig = postsData[editingPostIdx]
     const d = new Date(orig.date)
     const dateLabel = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-    const postHtml = generatePostHtml({ title, subtitle, dateLabel, html })
+    const updatedLabel = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    const updatedDate = new Date().toISOString().slice(0, 10)
+    const postHtml = generatePostHtml({ title, subtitle, dateLabel, updatedLabel, html })
     try {
       setStatus('blog', 'Updating...')
       const existing = await ghGet(postPath)
       await ghPut(postPath, postHtml, `update post: ${title}`, existing.sha)
-      postsData[editingPostIdx] = { ...orig, title }
+      postsData[editingPostIdx] = { ...orig, title, updatedDate }
       await writeJson('public/data/posts.json', postsData, `update post entry: ${title}`)
       setStatus('blog', 'Post updated!')
       cancelBlogEdit()
@@ -911,7 +913,7 @@ async function publishPost() {
   } catch(e) { setStatus('blog', e.message, true) }
 }
 
-function generatePostHtml({ title, subtitle, dateLabel, html }) {
+function generatePostHtml({ title, subtitle, dateLabel, updatedLabel, html }) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -939,6 +941,7 @@ function generatePostHtml({ title, subtitle, dateLabel, html }) {
     .post-title { font-size: 1.9rem; font-weight: 400; letter-spacing: 0.01em; line-height: 1.25; margin-bottom: 10px; }
     .post-subtitle { font-size: 0.88rem; font-weight: 400; color: var(--secondary); font-style: italic; margin-bottom: 6px; }
     .post-date { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .post-updated { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; opacity: 0.7; }
     .post-body { font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--text); max-width: 560px; }
     .post-body p + p { margin-top: 20px; }
     .post-body h2 { font-size: 1.2rem; font-weight: 500; margin: 32px 0 12px; }
@@ -989,6 +992,7 @@ function generatePostHtml({ title, subtitle, dateLabel, html }) {
         <h1 class="post-title">${escHtml(title)}</h1>
         ${subtitle ? `<p class="post-subtitle">${escHtml(subtitle)}</p>` : ''}
         <p class="post-date">${dateLabel}</p>
+        ${updatedLabel ? `<p class="post-updated">Updated ${updatedLabel}</p>` : ''}
       </div>
       <div class="post-body">
         ${html}
