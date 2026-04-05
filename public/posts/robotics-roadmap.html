@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting into robotics software engineering — Subhaan Syed</title>
-  <meta name="description" content="A beginner-friendly roadmap for students in Ontario" />
+  <title>Getting Into Robotics Software Engineering — Subhaan Syed</title>
+  <meta name="description" content="A beginner-friendly roadmap for students in Ontario — from zero to job-ready in robotics software engineering." />
   <meta name="author" content="Subhaan Syed" />
   <meta name="robots" content="index, follow" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Getting into robotics software engineering — Subhaan Syed" />
-  <meta property="og:description" content="A beginner-friendly roadmap for students in Ontario" />
+  <meta property="og:title" content="Getting Into Robotics Software Engineering — Subhaan Syed" />
+  <meta property="og:description" content="A beginner-friendly roadmap for students in Ontario — from zero to job-ready in robotics software engineering." />
   <meta property="og:image" content="https://subhaan-portfolio.vercel.app/logo.png" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Getting into robotics software engineering — Subhaan Syed" />
-  <meta name="twitter:description" content="A beginner-friendly roadmap for students in Ontario" />
+  <meta name="twitter:title" content="Getting Into Robotics Software Engineering — Subhaan Syed" />
+  <meta name="twitter:description" content="A beginner-friendly roadmap for students in Ontario — from zero to job-ready in robotics software engineering." />
   <meta name="twitter:image" content="https://subhaan-portfolio.vercel.app/logo.png" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,18 +26,28 @@
     .post-subtitle { font-size: 0.88rem; font-weight: 400; color: var(--secondary); font-style: italic; margin-bottom: 6px; }
     .post-date { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
     .post-updated { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; opacity: 0.7; }
-    .post-body { font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--text); max-width: 560px; }
-    .post-body p + p { margin-top: 20px; }
-    .post-body h2 { font-size: 1.2rem; font-weight: 500; margin: 32px 0 12px; }
-    .post-body h3 { font-size: 1rem; font-weight: 500; margin: 24px 0 8px; }
-    .post-body ul, .post-body ol { padding-left: 24px; margin: 16px 0; }
-    .post-body li { margin-bottom: 6px; }
-    .post-body blockquote { border-left: 2px solid var(--gold); padding-left: 16px; color: var(--secondary); font-style: italic; margin: 20px 0; }
+    .post-body { font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--text); max-width: 600px; }
+    .post-body p { margin-top: 18px; }
+    .post-body p:first-child { margin-top: 0; }
+    .post-body h2 { font-size: 1.25rem; font-weight: 500; margin: 40px 0 12px; letter-spacing: 0.01em; }
+    .post-body h3 { font-size: 1rem; font-weight: 500; margin: 28px 0 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .post-body ul, .post-body ol { padding-left: 24px; margin: 14px 0; }
+    .post-body li { margin-bottom: 7px; }
+    .post-body blockquote { border-left: 2px solid var(--gold); padding: 12px 16px; color: var(--secondary); font-style: italic; margin: 24px 0; background: rgba(201,160,80,0.04); }
+    .post-body blockquote p { margin-top: 8px; }
+    .post-body blockquote p:first-child { margin-top: 0; }
     .post-body a { border-bottom: 1px solid var(--border); transition: color 0.2s, border-color 0.2s; }
     .post-body a:hover { color: var(--gold); border-bottom-color: var(--gold); }
-    .post-body img { max-width: 100%; border-radius: 4px; margin: 20px 0; }
+    .post-body img { max-width: 100%; border-radius: 4px; margin: 20px 0 6px; display: block; }
+    .post-body figure { margin: 28px 0; }
+    .post-body figcaption { font-size: 0.72rem; color: var(--muted); font-style: italic; letter-spacing: 0.02em; margin-top: 6px; }
+    .post-body hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+    .post-body strong { font-weight: 500; }
     .back-link { display: inline-block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; transition: color 0.2s; }
     .back-link:hover { color: var(--gold); }
+    .tracker-link { display: inline-block; margin-top: 6px; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 9px 18px; border: 1px solid var(--gold); color: var(--gold); border-radius: 3px; transition: background 0.2s, color 0.2s; text-decoration: none; }
+    .tracker-link:hover { background: var(--gold); color: var(--bg); border-bottom: 1px solid var(--gold) !important; }
+    .byline { font-size: 0.78rem; color: var(--muted); margin-bottom: 28px; letter-spacing: 0.03em; }
   </style>
 </head>
 <body>
@@ -73,22 +83,375 @@
     <main class="content">
       <a href="/blog" class="back-link">← Blog</a>
       <div class="post-header">
-        <h1 class="post-title">Getting into robotics software engineering</h1>
+        <h1 class="post-title">Getting Into Robotics Software Engineering</h1>
         <p class="post-subtitle">A beginner-friendly roadmap for students in Ontario</p>
         <p class="post-date">March 27, 2026</p>
-        <p class="post-updated">Updated April 4, 2026</p>
+        <p class="post-updated">Updated April 2026</p>
       </div>
+
       <div class="post-body">
-        <p>
-        </p><p>
-        </p><p>
-        </p><p>
-        </p><p>Final Test. Mom I love you!!!
-      </p><p>
-      </p><p>
-      </p><p>
-      </p>
+
+        <p class="byline"><em>By Subhaan Syed · March 2026 · Updated April 2026</em></p>
+
+        <hr>
+
+        <h2>Bob Has a Problem</h2>
+
+        <p>Bob graduated from high school in Brampton last June. He likes building things. He spent most of grade 12 watching robotics videos on YouTube: Boston Dynamics demos, warehouse automation clips, self-driving car breakdowns. Somewhere in there, he decided this was what he wanted to do.</p>
+
+        <p>So he started learning. He found a Python course, a Linux tutorial, a couple of playlists about machine learning. He set up a GitHub account. He even bought an Arduino kit off Amazon and got an LED to blink.</p>
+
+        <p>And then he got stuck. Not on a specific problem. Stuck in a bigger way. He had dozens of tabs open, three half-finished courses, no idea what to learn next, and nobody to ask. He was not in a university program. He did not know anyone in robotics. Every time he searched for advice, he found another list of 50 resources, another person telling him to "just build projects," and another wall of information that felt impossible to organize.</p>
+
+        <p>Bob is not real. But his situation is. I know because I have been Bob, and if you are reading this, you might be Bob too.</p>
+
+        <p>This roadmap is what I wish someone had handed me when I started. These are the resources I wish I had known about sooner, organized in the order that makes sense, and written for people in Ontario who are trying to break into robotics software engineering without a university robotics program guiding them.</p>
+
+        <hr>
+
+        <h2>What This Roadmap Is (And What It Is Not)</h2>
+
+        <p>This is a structured learning path from zero to job-ready in robotics software engineering. It covers programming fundamentals, machine learning, computer vision, ROS 2, deeper robotics topics, and production skills, organized into seven phases with specific resources and practice goals.</p>
+
+        <p>What it is not: a university curriculum, a guarantee, or the only way to do this. The resources I chose worked best for me. I am a visual learner who likes video-based content paired with hands-on coding. If you prefer textbooks, documentation, or jumping into projects first, swap some of these out. The structure matters more than the specific links.</p>
+
+        <blockquote>
+          <p><strong>Myth:</strong> You need a computer science degree to work in robotics.</p>
+          <p><strong>Reality:</strong> You need skills, projects, and the ability to prove you can build things. A degree is one path, but not the only one. Most resources in this roadmap are free. What matters is what you can do, not where you learned it.</p>
+        </blockquote>
+
+        <hr>
+
+        <h2>The Only Rule: Practice More Than You Study</h2>
+
+        <p>Watching a tutorial is not learning. Reading documentation is not learning. Collecting bookmarks is definitely not learning. Learning happens when you try something, get stuck, break something, fix it, and try again. That cycle, repeated hundreds of times, is what turns a beginner into someone who can actually build.</p>
+
+        <p>Every phase below has a "what to practice" note. Those notes matter more than the videos. If you watch a two-hour PyTorch tutorial and move on, you wasted two hours. If you watch it, pause it, rebuild what they built, change something, break it, figure out why, and then move on, you just learned something real.</p>
+
+        <hr>
+
+        <h2>The Roadmap</h2>
+
+        <h3>Phase 0: Get Your House in Order</h3>
+
+        <p><strong>Target:</strong> 3 to 5 days · ~25 hours</p>
+
+        <p>Before you touch any technical content, set up the infrastructure that will hold your work. These are not optional extras. They are how the outside world sees what you build.</p>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://youtu.be/ECuqb5Tv9qI" target="_blank" rel="noopener noreferrer">GitHub Profile README, Part 1</a></li>
+          <li><a href="https://youtu.be/n6d4KHSKqGk" target="_blank" rel="noopener noreferrer">GitHub Profile README, Part 2</a></li>
+          <li><a href="https://www.youtube.com/watch?v=BcfGWi8Qywk" target="_blank" rel="noopener noreferrer">LinkedIn Profile Tips — Jeff Su</a></li>
+          <li><a href="https://www.youtube.com/watch?v=SmJ1YEMkoos" target="_blank" rel="noopener noreferrer">LinkedIn Job Seeker Tips — Jeff Su</a></li>
+          <li><a href="https://youtu.be/Yw7yWHigGKI" target="_blank" rel="noopener noreferrer">Portfolio Site Tutorial — CodeBucks</a></li>
+        </ul>
+
+        <p><strong>What to practice:</strong> Actually build your portfolio site. Do not just bookmark a template. Pick one, deploy it, and write a first post. Even if it is short.</p>
+
+        <hr>
+
+        <h3>Phase 1: Foundations</h3>
+
+        <p><strong>Target:</strong> 10 to 14 days · ~80 hours</p>
+
+        <p>Python, Linux, and C++ are the backbone of robotics software. Python is how you prototype and work with ML libraries. C++ is how production robotics code gets written. Linux is the operating system that almost every robot runs on.</p>
+
+        <figure>
+          <img src="https://img.youtube.com/vi/yFklUjC7hio/hqdefault.jpg" alt="Automatic Addison Python for Robotics tutorial thumbnail" />
+          <figcaption>Fig. 1. Thumbnail from "Python for Robotics" playlist. Source: Automatic Addison, YouTube, 2024.</figcaption>
+        </figure>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=yFklUjC7hio&list=PLNWNEEf8BvG7DXAtbYTQ_DtUwxWSIgFxD" target="_blank" rel="noopener noreferrer">Python for Robotics — Automatic Addison (16 videos)</a></li>
+          <li><a href="https://www.youtube.com/watch?v=ygXn5nV5qFc" target="_blank" rel="noopener noreferrer">Python for AI (Pandas, APIs, Git, .env)</a></li>
+          <li><a href="https://www.youtube.com/watch?v=z4hsRBODsac&list=PLNWNEEf8BvG6LncOfJ6NinHFvMDQm9hA6" target="_blank" rel="noopener noreferrer">Linux for Robotics — Automatic Addison</a></li>
+          <li><a href="https://training.linuxfoundation.org/training/introduction-to-linux/" target="_blank" rel="noopener noreferrer">Introduction to Linux — Linux Foundation (LFS101)</a></li>
+          <li><a href="https://www.youtube.com/watch?v=zYx2xLNMHIE&list=PLNWNEEf8BvG76B5Uw3AyOQ6YqBaB4w3f2" target="_blank" rel="noopener noreferrer">C++ for Robotics — Automatic Addison</a></li>
+          <li><a href="https://www.learncpp.com/" target="_blank" rel="noopener noreferrer">LearnCpp.com — C++ Reference</a></li>
+        </ul>
+
+        <p><strong>What to practice:</strong> Write code every day. After each lesson, close the tutorial and try to rebuild what you watched from memory. When you get stuck, that is the learning.</p>
+
+        <blockquote>
+          <p><strong>Myth:</strong> You need to master C++ before you can do anything in robotics.</p>
+          <p><strong>Reality:</strong> You need working C++ knowledge, not mastery. Learn enough to read and modify code, understand memory management, and work with classes. Do not let perfectionism stall your progress for months.</p>
+        </blockquote>
+
+        <hr>
+
+        <h3>Phase 2: Machine Learning, Deep Learning, and Computer Vision</h3>
+
+        <p><strong>Target:</strong> 10 to 14 days · ~55 hours</p>
+
+        <p>This is where you learn how robots see and make decisions. Start with classical ML, move into deep learning with PyTorch, then computer vision with OpenCV. If you have time, push into 3D vision.</p>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=ie4oGI85SAE&list=PL3JNM3ENFH-6QUwOjOw6SSQGclxMoSR_S&index=7" target="_blank" rel="noopener noreferrer">Scikit-Learn Part 1 — Coding With Sagar</a> <em>(Hindi)</em></li>
+          <li><a href="https://www.youtube.com/watch?v=Eky8CZXapBQ&list=PL3JNM3ENFH-6QUwOjOw6SSQGclxMoSR_S&index=6" target="_blank" rel="noopener noreferrer">Scikit-Learn Part 2 — Coding With Sagar</a> <em>(Hindi)</em></li>
+          <li><a href="https://www.learnpytorch.io/" target="_blank" rel="noopener noreferrer">PyTorch for Deep Learning — LearnPyTorch.io</a></li>
+          <li><a href="https://www.youtube.com/watch?v=yQu_3e7MAr0&list=PL3JNM3ENFH-6QUwOjOw6SSQGclxMoSR_S&index=9" target="_blank" rel="noopener noreferrer">OpenCV — Coding With Sagar</a> <em>(Hindi)</em></li>
+          <li><a href="https://web.stanford.edu/class/cs231a/" target="_blank" rel="noopener noreferrer">CS231A: Computer Vision — Stanford (free lectures)</a></li>
+          <li><a href="https://pytorch3d.org/tutorials/" target="_blank" rel="noopener noreferrer">PyTorch3D Tutorials</a></li>
+          <li><a href="https://geometricdeeplearning.com/lectures/" target="_blank" rel="noopener noreferrer">Geometric Deep Learning Course</a></li>
+        </ul>
+
+        <p><strong>A note on language:</strong> The Scikit-Learn (Parts 1 and 2) and OpenCV resources above are taught in Hindi. I watched them personally and recommend them for Hindi speakers. If you are not comfortable learning in Hindi, replace these three with English-language alternatives that cover the same material. The concepts are the same regardless of the language they are taught in.</p>
+
+        <p><strong>What to practice:</strong> After the PyTorch section, build a small image classifier from scratch. Start from an empty file, not a template. Then try a simple object detection project with OpenCV. These two projects alone will teach you more than rewatching the tutorials three times.</p>
+
+        <p><strong>CUDA (before moving on):</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=86FAWCzIe_4" target="_blank" rel="noopener noreferrer">CUDA — freeCodeCamp (12 hours)</a></li>
+        </ul>
+
+        <hr>
+
+        <h3>Phase 3: ROS 2</h3>
+
+        <p><strong>Target:</strong> 14 days · ~45 hours</p>
+
+        <p>ROS 2 (Robot Operating System 2) is the middleware that most modern robots run on. It handles communication between sensors, actuators, planners, and controllers. Learning ROS 2 is non-negotiable if you want to work in robotics software.</p>
+
+        <figure>
+          <img src="https://img.youtube.com/vi/kSy3NX3Pe-c/hqdefault.jpg" alt="ROS 2 Jazzy Getting Started tutorial thumbnail" />
+          <figcaption>Fig. 2. Thumbnail from "ROS 2 Jazzy — Getting Started" playlist. Source: Automatic Addison, YouTube, 2024.</figcaption>
+        </figure>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=kSy3NX3Pe-c&list=PLNWNEEf8BvG6z60R4r9_wQ6EkmqjBmFr" target="_blank" rel="noopener noreferrer">ROS 2 Jazzy — Getting Started</a></li>
+          <li><a href="https://www.youtube.com/watch?v=DM77KkIJsik&list=PLNWNEEf8BvG64FVZT4IdieI1PuYnHkUrt" target="_blank" rel="noopener noreferrer">ROS 2 Jazzy — Beginners (Fundamentals)</a></li>
+          <li><a href="https://www.youtube.com/watch?v=gyskLlvX3oI&list=PLNWNEEf8BvG45noktLVI9N0SmD72BpmH7" target="_blank" rel="noopener noreferrer">ROS 2 Jazzy — Intermediate: Navigation (Nav2)</a></li>
+          <li><a href="https://www.youtube.com/watch?v=c2Cm5bYHNFo&list=PLNWNEEf8BvG6lbOxH9AiXNetYcVgcJeWk" target="_blank" rel="noopener noreferrer">ROS 2 Jazzy — Intermediate: Manipulation (MoveIt 2)</a></li>
+          <li><a href="https://www.youtube.com/watch?v=QmidKV8--98&list=PLNWNEEf8BvG5hmmzKqdkXo7lmDVE69J2m" target="_blank" rel="noopener noreferrer">ROS 2 Jazzy — Advanced: Docker for ROS 2</a></li>
+        </ul>
+
+        <p><strong>After ROS 2, add simulation skills:</strong></p>
+        <ul>
+          <li><a href="https://www.nvidia.com/en-us/learn/learning-path/robotics/" target="_blank" rel="noopener noreferrer">NVIDIA Isaac Sim — Robotics Learning Path</a></li>
+          <li><a href="https://www.youtube.com/@LycheeAI" target="_blank" rel="noopener noreferrer">LycheeAI — Isaac Lab Tutorials</a></li>
+          <li><a href="https://docs.nvidia.com/learn-openusd/latest/index.html" target="_blank" rel="noopener noreferrer">NVIDIA OpenUSD</a></li>
+        </ul>
+
+        <p><strong>What to practice:</strong> Set up Ubuntu, install ROS 2 Jazzy, and run every example yourself. Then modify something. Change a parameter. Break it. Fix it. ROS 2 only makes sense once your hands are on it.</p>
+
+        <hr>
+
+        <h2>Why Data Structures and Algorithms Still Matter</h2>
+
+        <p>If you are aiming for robotics or AI engineering, you might wonder why anyone would tell you to study data structures and algorithms. It sounds like generic CS advice.</p>
+
+        <p>It is not. Robotics is full of algorithmic problems. Path planning uses A* and Dijkstra's. SLAM builds and traverses graph structures. Sensor data streams need efficient queues and buffers. Motion planning requires priority queues and spatial indexing. If you do not understand these structures, you will hit a wall once your projects get complex.</p>
+
+        <p>Beyond robotics, DSA gives you stronger problem-solving habits, better judgment about performance, cleaner code, and preparation for technical interviews, which still test these concepts at most robotics and AI companies.</p>
+
+        <p>I recommend doing 30 minutes of DSA every morning, starting from day one of Phase 1, and continuing through the entire roadmap.</p>
+
+        <p><strong>Resource:</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/playlist?list=PLKYEe2WisBTFEr6laH5bR2J19j7sl5O8R" target="_blank" rel="noopener noreferrer">Data Structures and Algorithms — Full Playlist</a></li>
+        </ul>
+
+        <hr>
+
+        <h3>Phase 4: LLMs and AI Engineering</h3>
+
+        <p><strong>Target:</strong> 21 days · ~90 hours</p>
+
+        <p>Large language models and AI engineering tools are increasingly relevant to robotics. Understanding how foundation models work, how to build APIs around them, and how to integrate them into larger systems makes you more versatile.</p>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=TO4aQ3ghFOc" target="_blank" rel="noopener noreferrer">FastAPI Beyond CRUD — Full Course</a></li>
+          <li><a href="https://huggingface.co/learn/llm-course/chapter1/1" target="_blank" rel="noopener noreferrer">Hugging Face LLM Course</a></li>
+          <li><a href="https://huggingface.co/learn/agents-course/unit0/introduction" target="_blank" rel="noopener noreferrer">Hugging Face Agents Course</a></li>
+          <li><a href="https://huggingface.co/learn" target="_blank" rel="noopener noreferrer">Hugging Face Learning Hub</a></li>
+        </ul>
+
+        <p><strong>What to practice:</strong> Build a small project that uses an LLM API. The goal is to understand how these models work in practice and how to build systems around them.</p>
+
+        <hr>
+
+        <h3>Phase 5: Going Deeper Into Robotics</h3>
+
+        <p><strong>Target:</strong> 7 to 10 days · ~25 hours</p>
+
+        <p>Control theory, Kalman filters, physics simulation, and advanced 3D representations. This is where you start understanding the math and physics that make robots work in the real world.</p>
+
+        <figure>
+          <img src="https://img.youtube.com/vi/oBc_BHxw78s/hqdefault.jpg" alt="Control Theory video series thumbnail" />
+          <figcaption>Fig. 3. Thumbnail from "Control Theory" video series. Source: Brian Douglas, YouTube, 2020.</figcaption>
+        </figure>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=oBc_BHxw78s" target="_blank" rel="noopener noreferrer">Control Theory #1 — Why Learn Control Theory</a></li>
+          <li><a href="https://www.youtube.com/watch?v=O-OqgFE9SD4" target="_blank" rel="noopener noreferrer">Control Theory #2 — Closed Loop Control</a></li>
+          <li><a href="https://www.youtube.com/watch?v=UR0hOmjaHp0" target="_blank" rel="noopener noreferrer">Control Theory #28 — PID Control Intro</a></li>
+          <li><a href="https://www.youtube.com/watch?v=XfAt6hNV8XM" target="_blank" rel="noopener noreferrer">Control Theory #29 — PID Examples</a></li>
+          <li><a href="https://www.youtube.com/watch?v=LfydfvHyikM" target="_blank" rel="noopener noreferrer">Control Theory #40 — Robotic Car, Closed Loop</a></li>
+          <li><a href="https://www.youtube.com/watch?v=th0acX5omRM" target="_blank" rel="noopener noreferrer">Control Theory #41 — Robotic Car, Simple Way</a></li>
+          <li><a href="https://github.com/AtsushiSakai/PythonRobotics" target="_blank" rel="noopener noreferrer">PythonRobotics — Every Major Robotics Algorithm</a></li>
+          <li><a href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python" target="_blank" rel="noopener noreferrer">Kalman and Bayesian Filters in Python</a></li>
+          <li><a href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer">Google Colab</a></li>
+          <li><a href="https://www.cs.cornell.edu/courses/cs5670/2025sp/projects/4_project/" target="_blank" rel="noopener noreferrer">Cornell NeRF Colab (CS5670)</a></li>
+          <li><a href="https://papers-100-lines.medium.com/3d-gaussian-splatting-tutorial-from-scratch-in-100-lines-of-pytorch-code-no-cuda-no-c-6ef104dc6419" target="_blank" rel="noopener noreferrer">3D Gaussian Splatting in 100 Lines of PyTorch</a></li>
+          <li><a href="https://medium.com/data-science/deep-learning-on-point-clouds-implementing-pointnet-in-google-colab-1fd65cd3a263" target="_blank" rel="noopener noreferrer">PointNet Implementation (Google Colab)</a></li>
+          <li><a href="https://objaverse.allenai.org/" target="_blank" rel="noopener noreferrer">Objaverse — 3D Object Dataset</a></li>
+        </ul>
+
+        <p><strong>What to practice:</strong> Run every PythonRobotics algorithm. Change the parameters. Watch what happens. Then implement a Kalman filter from scratch for a simple tracking problem.</p>
+
+        <hr>
+
+        <h3>Phase 6: Production Skills</h3>
+
+        <p><strong>Target:</strong> 7 days · ~30 hours</p>
+
+        <p>Knowing how to train a model is not enough. You need to know how to deploy it, monitor it, and keep it running.</p>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=w71RHxAWxaM" target="_blank" rel="noopener noreferrer">Ultimate MLOps — Full Course</a></li>
+          <li><a href="https://www.youtube.com/watch?v=tVskbekONlw" target="_blank" rel="noopener noreferrer">freeCodeCamp — MLflow + Databricks</a></li>
+          <li><a href="https://madewithml.com/courses/mlops/setup/" target="_blank" rel="noopener noreferrer">Made With ML — ML System Design</a></li>
+        </ul>
+
+        <hr>
+
+        <h3>Phase 7: AI for Robotics</h3>
+
+        <p><strong>Target:</strong> 10 to 12 days · ~55 hours</p>
+
+        <p>This is where everything comes together. Deep reinforcement learning, sim-to-real transfer, and hands-on robot learning platforms.</p>
+
+        <p><strong>Resources:</strong></p>
+        <ul>
+          <li><a href="https://huggingface.co/learn/deep-rl-course/unit0/introduction" target="_blank" rel="noopener noreferrer">Hugging Face Deep RL Course</a></li>
+          <li><a href="https://huggingface.co/learn/robotics-course/en/unit0/1" target="_blank" rel="noopener noreferrer">Hugging Face LeRobot Course</a></li>
+          <li><a href="https://huggingface.co/spaces/lerobot/robot-learning-tutorial" target="_blank" rel="noopener noreferrer">Hugging Face Robot Learning Tutorial (Interactive)</a></li>
+          <li><a href="https://www.nvidia.com/en-us/learn/learning-path/robotics/" target="_blank" rel="noopener noreferrer">NVIDIA Isaac Lab — Robotics Learning Path</a></li>
+          <li><a href="https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-42+V1" target="_blank" rel="noopener noreferrer">NVIDIA Isaac Lab — DLI Course</a></li>
+          <li><a href="https://shapenet.org/" target="_blank" rel="noopener noreferrer">ShapeNet — 3D Model Repository</a></li>
+          <li><a href="https://huggingface.co/datasets/RyanWW/Spatial457" target="_blank" rel="noopener noreferrer">Spatial457 Benchmark</a></li>
+        </ul>
+
+        <p><strong>What to practice:</strong> Train a reinforcement learning agent in simulation. Then try to transfer it to a different environment. When you see an agent learn to navigate because of code you wrote, the entire roadmap clicks.</p>
+
+        <blockquote>
+          <p><strong>Myth:</strong> You need expensive hardware to learn robotics.</p>
+          <p><strong>Reality:</strong> Almost everything in this roadmap runs in simulation. You can learn ROS 2, train RL agents, implement SLAM, and build perception pipelines on a laptop. Hardware matters eventually, but it is not a barrier to starting.</p>
+        </blockquote>
+
+        <hr>
+
+        <h2>The Shift Toward AI Makes Robotics More Valuable, Not Less</h2>
+
+        <p>There is a conversation happening in tech right now about AI replacing jobs and automating everything. Some of that is real. But here is what is also real: as AI gets better, robotics gets more valuable, because robotics is where AI meets the physical world.</p>
+
+        <p>A language model can write an email. But it cannot pick up a box, navigate a warehouse, inspect a bridge, or deliver a package. Those tasks require perception, planning, control, and physical interaction, which is exactly what robotics software engineers build. The better AI gets, the more capable robots become, and the more people are needed to build and maintain those systems.</p>
+
+        <p>Ontario is already seeing this. According to the Vector Institute's 2024 to 2025 ecosystem report, 17,196 new AI-related jobs were created in the province in a single year, with $2.6 billion invested in Ontario AI companies. The Ontario Vehicle Innovation Network has invested over $141 million into connected and autonomous vehicle technology, with public demonstration events in Vaughan and Markham where you can see autonomous delivery robots and self-driving systems in action.</p>
+
+        <p>This is not hype. This is an industry being built in your province.</p>
+
+        <hr>
+
+        <h2>You Do Not Have to Do This Alone</h2>
+
+        <p>The hardest part of learning robotics outside university is the isolation. Ontario has more community resources than most people realize. Here are the ones I wish I had known about sooner:</p>
+
+        <figure>
+          <img src="https://img.youtube.com/vi/86FAWCzIe_4/hqdefault.jpg" alt="FIRST Robotics Competition teams" />
+          <figcaption>Fig. 4. Thumbnail from "CUDA — Full Course" by freeCodeCamp. Source: freeCodeCamp, YouTube, 2024.</figcaption>
+        </figure>
+
+        <p><a href="https://www.meetup.com/gta-robotics/" target="_blank" rel="noopener noreferrer"><strong>GTA Robotics</strong></a> is a 3,300-member Meetup group that builds autonomous robots using Donkey Car and JetBot. Monthly sessions, active Discord, all skill levels welcome.</p>
+
+        <p><a href="https://www.kwartzlab.ca" target="_blank" rel="noopener noreferrer"><strong>KwartzLab</strong></a> in Kitchener is a 9,000-square-foot makerspace with 3D printers, a laser cutter, CNC mills, and electronics workbenches. $59/month, free Tuesday Open Nights.</p>
+
+        <p><a href="https://hacklab.to/" target="_blank" rel="noopener noreferrer"><strong>HackLab.TO</strong></a> in Toronto offers oscilloscopes, SMT rework stations, microcontroller dev boards, and a free weekly open house with dinner.</p>
+
+        <p><a href="https://firstroboticscanada.org/volunteer/" target="_blank" rel="noopener noreferrer"><strong>FIRST Robotics Canada</strong></a> lets adults volunteer as mentors alongside student teams building 125-pound competition robots. Free, structured, and hands-on.</p>
+
+        <p><a href="https://tpl.ca/using-the-library/computer-services/digital-innovation-services/digital-innovation-hubs/" target="_blank" rel="noopener noreferrer"><strong>Toronto Public Library Digital Innovation Hubs</strong></a> lend Arduino and Raspberry Pi kits for free. Pop-Up Learning Labs bring robotics kits to branches across the city.</p>
+
+        <p><a href="https://www.admtoronto.com/en/home.html" target="_blank" rel="noopener noreferrer"><strong>ADM Toronto</strong></a> is Canada's largest annual manufacturing and automation expo. The ATX Canada section showcases cobots, robotic arms, and vision systems. Expo floor is free. The Pathways program matches newcomers with industry mentors.</p>
+
+        <blockquote>
+          <p><strong>Myth:</strong> You need to be in a university program to get hands-on robotics experience in Ontario.</p>
+          <p><strong>Reality:</strong> Makerspaces, hackerspaces, robotics competitions, and public library programs are all open to anyone. The resources exist. Most people just do not know about them.</p>
+        </blockquote>
+
+        <hr>
+
+        <h2>Start Here</h2>
+
+        <p>Pick Phase 0 or Phase 1. Open one resource. Start. Do not wait until you feel ready. That feeling comes after you begin, not before.</p>
+
+        <p>I built a companion tracker spreadsheet that maps every phase, resource, and milestone in this roadmap. Download it, make a copy, and check things off as you go.</p>
+
+        <p><a href="/learning-path-tracker.xlsx" download class="tracker-link">Download the tracker spreadsheet</a></p>
+
+        <p>And if you are in Ontario, go to one of the communities listed above. Walk into a Tuesday Open Night at KwartzLab or HackLab. Join the GTA Robotics Discord. Sign up to mentor a FIRST team. The fastest way to stop feeling stuck is to be in a room with people who are building things.</p>
+
+        <p>You do not need permission. You just need to show up.</p>
+
+        <hr>
+
+        <h2>About Me</h2>
+
+        <p>My name is Subhaan Syed. I am a student based in Waterloo, Ontario, working toward building something in the large spatial models space, an emerging area of AI focused on teaching machines to reason about 3D structure and physical environments.</p>
+
+        <p>I got into robotics and AI through self-directed learning. No robotics program, no co-op placement in the field, no family connections in tech. I started with YouTube tutorials, open-source courses, and a lot of trial and error. This roadmap is the cleaned-up version of what I wish I had from the start.</p>
+
+        <p><strong>What I am working on:</strong></p>
+        <ul>
+          <li>Working toward building something in large spatial models, focused on spatial reasoning for AI</li>
+          <li>Studying at the University of Waterloo</li>
+          <li>Curating a free, comprehensive learning roadmap for robotics software engineering</li>
+          <li>Researching Ontario's community-based robotics and AI ecosystem for non-university learners</li>
+        </ul>
+
+        <p>You can find me on <a href="https://x.com/thesubhaansyed" target="_blank" rel="noopener noreferrer">X (@thesubhaansyed)</a>, <a href="https://www.linkedin.com/in/subhaans/" target="_blank" rel="noopener noreferrer">LinkedIn</a>, <a href="https://github.com/Subhaan50" target="_blank" rel="noopener noreferrer">GitHub</a>, or by <a href="mailto:subhaan.syed01@gmail.com">email</a>.</p>
+
+        <hr>
+
+        <h2>References</h2>
+
+        <p>"Advanced Design and Manufacturing Expo Toronto (ADM Toronto)." <em>ADM Toronto</em>, Informa Markets, 2025, <a href="https://www.admtoronto.com/en/home.html" target="_blank" rel="noopener noreferrer">www.admtoronto.com/en/home.html</a>.</p>
+
+        <p>Automatic Addison. "Python for Robotics." <em>YouTube</em>, 2024, <a href="https://www.youtube.com/watch?v=yFklUjC7hio&list=PLNWNEEf8BvG7DXAtbYTQ_DtUwxWSIgFxD" target="_blank" rel="noopener noreferrer">www.youtube.com/playlist?list=PLNWNEEf8BvG7DXAtbYTQ_DtUwxWSIgFxD</a>.</p>
+
+        <p>Automatic Addison. "ROS 2 Jazzy — Getting Started." <em>YouTube</em>, 2024, <a href="https://www.youtube.com/watch?v=kSy3NX3Pe-c&list=PLNWNEEf8BvG6z60R4r9_wQ6EkmqjBmFr" target="_blank" rel="noopener noreferrer">www.youtube.com/playlist?list=PLNWNEEf8BvG6z60R4r9_wQ6EkmqjBmFr</a>.</p>
+
+        <p>Brian Douglas. "Control Theory." <em>YouTube</em>, 2020, <a href="https://www.youtube.com/watch?v=oBc_BHxw78s" target="_blank" rel="noopener noreferrer">www.youtube.com/watch?v=oBc_BHxw78s</a>.</p>
+
+        <p>"Digital Innovation Hubs." <em>Toronto Public Library</em>, 2014 to 2026, <a href="https://tpl.ca/using-the-library/computer-services/digital-innovation-services/digital-innovation-hubs/" target="_blank" rel="noopener noreferrer">tpl.ca/using-the-library/…/digital-innovation-hubs/</a>.</p>
+
+        <p>"FIRST Robotics Canada: Ontario District." <em>FIRST Robotics Canada</em>, 2026, <a href="https://firstroboticscanada.org/volunteer/" target="_blank" rel="noopener noreferrer">firstroboticscanada.org/volunteer/</a>.</p>
+
+        <p>freeCodeCamp. "CUDA — Full Course." <em>YouTube</em>, 2024, <a href="https://www.youtube.com/watch?v=86FAWCzIe_4" target="_blank" rel="noopener noreferrer">www.youtube.com/watch?v=86FAWCzIe_4</a>.</p>
+
+        <p>"HackLab.TO." <em>HackLab.TO</em>, 2010 to 2026, <a href="https://hacklab.to/" target="_blank" rel="noopener noreferrer">hacklab.to/</a>.</p>
+
+        <p>"KwartzLab Makerspace." <em>KwartzLab Makerspace</em>, 2009 to 2026, <a href="https://www.kwartzlab.ca" target="_blank" rel="noopener noreferrer">www.kwartzlab.ca</a>.</p>
+
+        <p>"Learn PyTorch." <em>LearnPyTorch.io</em>, 2024, <a href="https://www.learnpytorch.io/" target="_blank" rel="noopener noreferrer">www.learnpytorch.io</a>.</p>
+
+        <p>"Ontario Vehicle Innovation Network (OVIN)." <em>OVINHub</em>, Government of Ontario, 2021 to 2026, <a href="https://www.ovinhub.ca/" target="_blank" rel="noopener noreferrer">www.ovinhub.ca/</a>.</p>
+
+        <p>Sakai, Atsushi. "PythonRobotics." <em>GitHub</em>, 2024, <a href="https://github.com/AtsushiSakai/PythonRobotics" target="_blank" rel="noopener noreferrer">github.com/AtsushiSakai/PythonRobotics</a>.</p>
+
+        <p>Slavescu, Marius. "GTA Robotics." <em>Meetup</em>, 2024 to 2026, <a href="https://www.meetup.com/gta-robotics/" target="_blank" rel="noopener noreferrer">www.meetup.com/gta-robotics/</a>.</p>
+
+        <p>Vector Institute. "Ontario's AI Ecosystem Report 2024 to 2025." <em>Vector Institute for Artificial Intelligence</em>, June 2025, <a href="https://vectorinstitute.ai/ontario-ai-ecosystem-report-2024-25/" target="_blank" rel="noopener noreferrer">vectorinstitute.ai/ontario-ai-ecosystem-report-2024-25/</a>.</p>
+
       </div>
+
       <div class="mobile-footer">
         <a href="https://x.com/thesubhaansyed" target="_blank" rel="noopener noreferrer" class="social-link">X</a>
         <a href="https://www.linkedin.com/in/subhaans/" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
